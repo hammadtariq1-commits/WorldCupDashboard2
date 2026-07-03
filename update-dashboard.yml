@@ -1,0 +1,50 @@
+name: Update World Cup dashboard
+
+# Runs on a schedule and refreshes index.html with the latest results.
+# Because the repo is connected to Netlify, every pushed change auto-deploys
+# to your site (fifaupdates2026) within a minute or two.
+
+on:
+  schedule:
+    # Every 20 minutes (times are UTC). GitHub's shared runners can start a few
+    # minutes late — that's normal. Use "Run workflow" for an instant refresh.
+    - cron: "*/20 * * * *"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write        # allow the workflow to commit the refreshed index.html
+
+concurrency:
+  group: wc-dashboard
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Refresh dashboard from football-data.org
+        env:
+          FOOTBALL_DATA_TOKEN: ${{ secrets.FOOTBALL_DATA_TOKEN }}
+          WC_COMPETITION: WC
+        run: node build.mjs
+
+      - name: Commit and push if the results changed
+        run: |
+          if [ -n "$(git status --porcelain index.html)" ]; then
+            git config user.name  "wc-dashboard-bot"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add index.html
+            git commit -m "chore: refresh World Cup results ($(date -u '+%Y-%m-%d %H:%M UTC'))"
+            git push
+            echo "Pushed an update - Netlify will redeploy."
+          else
+            echo "No change since last run."
+          fi

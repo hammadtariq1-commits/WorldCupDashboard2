@@ -1,0 +1,1105 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light">
+<title>FIFA World Cup 2026</title>
+<meta name="description" content="FIFA World Cup 2026 — live matches, knockout bracket, predictions and Golden Boot, all in Qatar time.">
+<meta name="theme-color" content="#00e0a8">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="FIFA WC 2026">
+<meta property="og:title" content="FIFA World Cup 2026">
+<meta property="og:description" content="Matches, live data, predictions and knockout path — all in Qatar time.">
+<meta property="og:type" content="website">
+<style>
+:root{
+  --bg:#eef3fb; --bg2:#e4ebf6; --panel:#ffffff; --panel2:#f5f8fd; --line:#dde5f1; --line2:#c9d5e8;
+  --ink:#0b1426; --muted:#4a5a76; --faint:#8494b0;
+  --pink:#ff2d78; --purple:#8b5cf6; --teal:#00e0a8; --blue:#3b82f6; --gold:#ffc23c; --orange:#ff8a3d;
+  --green:#22e07a; --red:#ff5a6a; --grey:#5b6b88;
+  --grad:linear-gradient(120deg,#00e0a8 0%,#3b82f6 100%);
+  --grad-hot:linear-gradient(120deg,#ff2d78 0%,#8b5cf6 55%,#3b82f6 100%);
+  --grad-gold:linear-gradient(120deg,#ffc23c 0%,#ff8a3d 100%);
+  --grad-champ:linear-gradient(120deg,#8b5cf6 0%,#ec4899 100%);
+  --grad-red:linear-gradient(120deg,#ff5a6a 0%,#ff8a3d 100%);
+  --grad-blue:linear-gradient(120deg,#3b82f6 0%,#8b5cf6 100%);
+  --shadow:0 12px 32px rgba(24,48,96,.12);
+  --glow-teal:0 0 0 1px rgba(0,224,168,.45),0 10px 30px rgba(0,224,168,.18);
+  --radius:18px; --radius-s:12px; --maxw:1300px;
+}
+/* Light is the standard theme for everyone. Keep a dark media query so OS-dark viewers keep the light chrome. */
+@media (prefers-color-scheme: dark){
+  :root{ color-scheme:light; }
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:
+    radial-gradient(1200px 620px at 82% -8%, rgba(139,92,246,.20), transparent 60%),
+    radial-gradient(1000px 520px at -8% 6%, rgba(0,224,168,.16), transparent 55%),
+    radial-gradient(900px 500px at 50% 120%, rgba(255,45,120,.12), transparent 60%),
+    var(--bg);
+  color:var(--ink);
+  font-family:"Segoe UI",system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif;
+  line-height:1.5; -webkit-font-smoothing:antialiased; letter-spacing:.1px; overflow-x:hidden;
+}
+a{color:var(--blue); text-decoration:none} a:hover{text-decoration:underline}
+.wrap{max-width:var(--maxw); margin:0 auto; padding:0 18px}
+.small{font-size:12px} .muted{color:var(--muted)} .faint{color:var(--faint)}
+button{font-family:inherit; cursor:pointer}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(34,224,122,.45)}70%{box-shadow:0 0 0 9px rgba(34,224,122,0)}100%{box-shadow:0 0 0 0 rgba(34,224,122,0)}}
+@keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
+@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+
+/* pitch pattern */
+.pitch{position:relative}
+.pitch::before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;opacity:.5;
+  background:repeating-linear-gradient(100deg,rgba(0,224,168,.05) 0 42px,transparent 42px 84px);}
+
+/* ---------- Top bar ---------- */
+.topbar{position:sticky; top:0; z-index:50; backdrop-filter:blur(14px);
+  background:linear-gradient(180deg,rgba(255,255,255,.96),rgba(255,255,255,.80)); border-bottom:1px solid var(--line)}
+.topbar .row{display:flex; align-items:center; gap:14px; padding:11px 18px; max-width:var(--maxw); margin:0 auto; flex-wrap:wrap}
+.brand{display:flex; align-items:center; gap:13px; min-width:0}
+.badge-cup{width:46px;height:46px;border-radius:14px;background:var(--grad-hot);display:grid;place-items:center;
+  font-size:24px; box-shadow:var(--shadow); flex:none; animation:floaty 4s ease-in-out infinite}
+.brand h1{font-size:18px; margin:0; line-height:1.05; font-weight:800; letter-spacing:.2px}
+.brand p{margin:2px 0 0; font-size:11.5px; color:var(--muted)}
+.tb-spacer{flex:1}
+.feedpill{display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border-radius:999px;
+  border:1px solid var(--line); background:var(--panel); font-size:12px; font-weight:700}
+.dot{width:9px;height:9px;border-radius:50%;background:var(--grey)}
+.dot.live{background:var(--green); animation:pulse 1.6s infinite}
+.dot.delayed{background:var(--gold)} .dot.failed{background:var(--red)} .dot.manual{background:var(--blue)}
+.btn{border:1px solid var(--line); background:var(--panel); color:var(--ink); padding:9px 14px;
+  border-radius:11px; font-size:12.5px; font-weight:700; display:inline-flex; gap:7px; align-items:center; transition:.15s}
+.btn:hover{border-color:var(--teal); transform:translateY(-1px)}
+.btn.primary{background:var(--grad); border:none; color:#04140f}
+.refresh-meta{font-size:11px; color:var(--muted); white-space:nowrap}
+
+/* ---------- Nav ---------- */
+.nav{display:flex; gap:4px; overflow-x:auto; padding:6px 18px 0; max-width:var(--maxw); margin:0 auto; scrollbar-width:none}
+.nav::-webkit-scrollbar{display:none}
+.nav a{color:var(--muted); font-size:13px; font-weight:700; padding:10px 14px; border-radius:11px 11px 0 0; white-space:nowrap; border-bottom:2px solid transparent}
+.nav a:hover{color:var(--ink); text-decoration:none}
+.nav a.active{color:var(--ink); border-bottom-color:var(--teal); background:linear-gradient(180deg,rgba(0,224,168,.10),transparent)}
+
+/* ---------- Hero ---------- */
+.hero{margin-top:16px; border-radius:var(--radius); overflow:hidden; border:1px solid var(--line);
+  background:linear-gradient(120deg,rgba(255,45,120,.16),rgba(139,92,246,.13) 45%,rgba(59,130,246,.14));
+  box-shadow:var(--shadow); position:relative}
+.hero .inner{padding:30px 26px; display:flex; align-items:center; gap:26px; flex-wrap:wrap}
+.hero h2{margin:0; font-size:34px; font-weight:900; letter-spacing:.3px; line-height:1.02;
+  background:linear-gradient(120deg,#0b1426,#3b82f6);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.hero p{margin:8px 0 0; color:var(--muted); font-size:14.5px}
+.hero .tro{font-size:96px; line-height:1; filter:drop-shadow(0 10px 22px rgba(255,194,60,.5)); animation:floaty 5s ease-in-out infinite}
+.hero-flags{display:inline-flex;align-items:center;gap:6px;margin-inline-start:6px}
+@media(max-width:560px){ .hero .tro{font-size:64px} .hero h2{font-size:25px} }
+.hero-tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.htag{font-size:11px;font-weight:800;letter-spacing:.4px;padding:5px 11px;border-radius:999px;border:1px solid var(--line2);background:rgba(11,20,38,.04)}
+
+/* ---------- Filters ---------- */
+.filters{display:flex; gap:8px; flex-wrap:wrap; align-items:center; padding:14px 0}
+.filters select, .filters input{background:var(--panel); color:var(--ink); border:1px solid var(--line);
+  border-radius:11px; padding:10px 12px; font-size:12.5px; font-family:inherit; min-width:0}
+.filters input.search{flex:1; min-width:200px}
+.filters input.search:focus,.filters select:focus{outline:none;border-color:var(--teal)}
+.seg{display:inline-flex; background:var(--panel); border:1px solid var(--line); border-radius:11px; overflow:hidden}
+.seg button{background:transparent; border:none; color:var(--muted); padding:9px 13px; font-size:12px; font-weight:700}
+.seg button.on{background:var(--grad); color:#04140f}
+.switch{display:inline-flex;align-items:center;gap:8px;font-size:12.5px;color:var(--muted);font-weight:700}
+.switch input{appearance:none;width:40px;height:23px;background:var(--line2);border-radius:999px;position:relative;cursor:pointer;transition:.2s;flex:none}
+.switch input:checked{background:var(--teal)}
+.switch input::after{content:"";position:absolute;top:2px;left:2px;width:19px;height:19px;border-radius:50%;background:#fff;transition:.2s}
+.switch input:checked::after{left:18px}
+
+/* ---------- Layout ---------- */
+main{padding:6px 0 60px}
+.grid{display:grid; gap:14px}
+.cards-6{grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+.cards-4{grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+.cards-kpi{grid-template-columns:repeat(auto-fit,minmax(272px,1fr))}
+.cards-3{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+.cards-2{grid-template-columns:repeat(auto-fit,minmax(360px,1fr))}
+.panel{background:linear-gradient(180deg,var(--panel),var(--panel2)); border:1px solid var(--line);
+  border-radius:var(--radius); padding:16px; box-shadow:var(--shadow); animation:fadeUp .4s ease both}
+.section-h{display:flex; align-items:center; justify-content:space-between; gap:10px; margin:24px 0 12px}
+.section-h h2{font-size:17px; margin:0; letter-spacing:.2px; display:flex; align-items:center; gap:9px}
+.section-h h2 .ic{font-size:19px}
+
+/* KPI */
+.kpi{position:relative; overflow:hidden; transition:.18s; cursor:default; padding:20px 19px; min-height:132px}
+.kpi:hover{transform:translateY(-4px); border-color:var(--line2)}
+.kpi .lab{font-size:11px; text-transform:uppercase; letter-spacing:1.2px; color:var(--muted); font-weight:800; display:flex; align-items:center; gap:6px}
+.kpi .val{font-size:26px; font-weight:900; margin-top:10px; line-height:1.12}
+.kpi .sub{font-size:12.5px; color:var(--muted); margin-top:6px; line-height:1.35}
+.kpi-teams{display:inline-flex;flex-wrap:wrap;align-items:center;gap:7px;font-size:16px;font-weight:800}
+.kpi-teams .flag{vertical-align:middle}
+.kpi.hot{background:var(--grad-hot); border:none; color:#fff}
+.kpi.hot .lab,.kpi.hot .sub{color:rgba(255,255,255,.88)}
+.kpi.tealg{background:var(--grad); border:none; color:#04140f}
+.kpi.tealg .lab,.kpi.tealg .sub{color:rgba(4,20,15,.74)}
+.kpi.goldg{background:var(--grad-gold); border:none; color:#2a1800}
+.kpi.goldg .lab,.kpi.goldg .sub{color:rgba(42,24,0,.74)}
+.kpi.champg{background:var(--grad-champ); border:none; color:#fff}
+.kpi.champg .lab,.kpi.champg .sub{color:rgba(255,255,255,.88)}
+.kpi.redg{background:var(--grad-red); border:none; color:#fff}
+.kpi.redg .lab,.kpi.redg .sub{color:rgba(255,255,255,.9)}
+.kpi.blueg{background:var(--grad-blue); border:none; color:#fff}
+.kpi.blueg .lab,.kpi.blueg .sub{color:rgba(255,255,255,.88)}
+.kpi .big-emoji{position:absolute; right:10px; bottom:2px; font-size:56px; opacity:.18}
+/* player avatar placeholder */
+.avatar{display:inline-grid; place-items:center; border-radius:50%; color:#fff; font-weight:900;
+  position:relative; flex:none; box-shadow:0 5px 14px rgba(0,0,0,.4); border:2px solid rgba(255,255,255,.18); letter-spacing:.3px}
+.avatar .fbadge{position:absolute; bottom:-4px; right:-5px; line-height:0}
+.avatar .fbadge .flag{border:1.5px solid rgba(0,0,0,.5)}
+.playerrow{display:flex; align-items:center; gap:11px; min-width:0}
+.playerrow b{font-size:14px}
+
+/* ---------- Team badge (flag + code + name + geo-locator) ---------- */
+.tbadge{display:inline-flex; align-items:center; gap:8px; min-width:0}
+.flag{display:inline-block; border-radius:4px; border:1px solid rgba(255,255,255,.22); box-shadow:0 1px 3px rgba(0,0,0,.4); flex:none}
+.flag.ph{background:var(--line)}
+.tc{font-weight:900; font-size:12px; letter-spacing:.5px; flex:none}
+.tn{font-weight:700; font-size:13.5px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.grp{font-size:9.5px;font-weight:800;letter-spacing:.4px;color:var(--faint);border:1px solid var(--line);border-radius:999px;padding:2px 6px;flex:none}
+.globe{flex:none; vertical-align:middle}
+
+/* ---------- Match cards ---------- */
+.match{display:flex; flex-direction:column; gap:11px; transition:.18s; cursor:pointer; position:relative; overflow:hidden}
+.match:hover{transform:translateY(-3px); box-shadow:var(--glow-teal); border-color:var(--teal)}
+.match .top{display:flex; justify-content:space-between; align-items:center; gap:8px}
+.stage-chip{font-size:10px; font-weight:900; letter-spacing:.7px; text-transform:uppercase; color:#04140f;
+  background:var(--grad); padding:4px 9px; border-radius:999px}
+.stage-chip.ko{background:var(--grad-gold); color:#2a1800}
+.stage-chip.big{background:var(--grad-champ); color:#fff}
+.teamrow{display:flex; align-items:center; justify-content:space-between; gap:10px}
+.side{display:flex; align-items:center; gap:9px; min-width:0}
+.score{font-weight:900; font-size:22px; min-width:24px; text-align:center}
+.score.dim{color:var(--faint); font-weight:800}
+.pens{font-size:11px;color:var(--muted);font-weight:700}
+.metarow{display:flex; flex-wrap:wrap; gap:6px 14px; font-size:12px; color:var(--muted)}
+.metarow b{color:var(--ink); font-weight:700}
+.qatar{color:var(--teal); font-weight:800}
+.statuschip{font-size:10.5px;font-weight:900;padding:4px 9px;border-radius:999px;letter-spacing:.4px; display:inline-flex; align-items:center; gap:5px}
+.st-ft{background:rgba(91,107,136,.2);color:var(--muted)}
+.st-live{background:rgba(34,224,122,.16);color:var(--green)}
+.st-sched{background:rgba(59,130,246,.16);color:#7fb0ff}
+.st-today{background:rgba(255,194,60,.18);color:var(--gold)}
+.blink{width:7px;height:7px;border-radius:50%;background:var(--green);animation:pulse 1.4s infinite}
+.prob-mini{display:flex;height:10px;border-radius:999px;overflow:hidden;background:var(--line)}
+.prob-mini i{display:block;height:100%}
+.prob-legend{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-top:5px;font-weight:600}
+.watchers{display:flex;flex-wrap:wrap;gap:6px}
+.wchip{font-size:11px;background:var(--panel2);border:1px solid var(--line);border-radius:999px;padding:3px 9px;color:var(--muted)}
+
+/* ---------- Source chip ---------- */
+.src{display:inline-flex;align-items:center;gap:6px;font-size:10px;color:var(--faint);
+  border:1px dashed var(--line2);border-radius:999px;padding:3px 9px}
+.src b{color:var(--muted);font-weight:700}
+.srcbar{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:8px}
+.est-tag{font-size:9.5px;font-weight:900;letter-spacing:.4px;color:var(--purple);background:rgba(139,92,246,.14);border:1px solid rgba(139,92,246,.35);border-radius:999px;padding:2px 8px}
+
+/* ---------- Tables ---------- */
+.tablewrap{overflow:auto; border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow)}
+table{width:100%; border-collapse:collapse; font-size:13px}
+th,td{padding:11px 11px; text-align:left; border-bottom:1px solid var(--line); white-space:nowrap}
+th{font-size:10.5px; text-transform:uppercase; letter-spacing:.6px; color:var(--muted); font-weight:800; background:var(--panel2); position:sticky; top:0}
+td.num,th.num{text-align:right; font-variant-numeric:tabular-nums}
+tbody tr:hover td{background:rgba(11,20,38,.04)}
+.rankcell{font-weight:900;font-size:15px;color:var(--gold)}
+
+/* ---------- Awaiting ---------- */
+.await{border:1px dashed var(--line2); border-radius:var(--radius-s); padding:15px;
+  background:repeating-linear-gradient(45deg,transparent,transparent 11px,rgba(255,255,255,.018) 11px,rgba(255,255,255,.018) 22px)}
+.await .h{display:flex;align-items:center;gap:8px;font-weight:800;font-size:13px;color:var(--gold)}
+.await p{margin:7px 0 0;font-size:12.5px;color:var(--muted)}
+
+/* ---------- Bracket ---------- */
+.bracket{display:flex; gap:20px; overflow-x:auto; padding:10px 2px 18px}
+.bcol{display:flex; flex-direction:column; gap:14px; min-width:224px; justify-content:space-around}
+.bcol h4{font-size:10.5px;text-transform:uppercase;letter-spacing:.9px;color:var(--muted);margin:0 0 2px;text-align:center;font-weight:800}
+.bnode{background:linear-gradient(180deg,var(--panel),var(--panel2)); border:1.5px solid var(--line); border-radius:13px; padding:9px 10px; font-size:12px; transition:.15s}
+.bnode:hover{border-color:var(--line2)}
+.bnode .bt{display:flex;align-items:center;gap:8px;padding:4px 0}
+.bnode .bt .sc{margin-left:auto;font-weight:900}
+.bnode.confirmed{border-color:rgba(34,224,122,.55); box-shadow:0 0 0 1px rgba(34,224,122,.12)}
+.bnode.predicted{border-style:dashed;border-color:rgba(59,130,246,.65)}
+.bnode.pending{opacity:.55}
+.bnode.champ{border-color:var(--gold); box-shadow:0 0 0 1px rgba(255,194,60,.4),0 8px 24px rgba(255,194,60,.14)}
+.bmeta{font-size:9.5px;color:var(--faint);margin-top:6px;border-top:1px solid var(--line);padding-top:6px;display:flex;justify-content:space-between;gap:6px}
+.qual{border-radius:4px;padding:0 4px}
+.qual.green{box-shadow:inset 0 0 0 1.5px rgba(34,224,122,.6)}
+.qual.gold{box-shadow:inset 0 0 0 1.5px var(--gold)}
+.elim{opacity:.4}.elim .tn,.elim .tc{text-decoration:line-through}
+.legend{display:flex;flex-wrap:wrap;gap:14px;font-size:12px;color:var(--muted);margin:4px 0 10px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.swatch{width:24px;height:13px;border-radius:5px;border:1px solid var(--line2)}
+.swatch.g{border:1.5px solid rgba(34,224,122,.7)} .swatch.b{border:1.5px dashed rgba(59,130,246,.75)}
+.swatch.e{opacity:.4;background:var(--line)} .swatch.p{opacity:.55} .swatch.au{border:1.5px solid var(--gold)}
+
+/* ---------- charts ---------- */
+.barrow{display:grid;grid-template-columns:150px 1fr 46px;gap:10px;align-items:center;margin:7px 0;font-size:12.5px}
+.bartrack{height:16px;background:var(--line);border-radius:999px;overflow:hidden}
+.barfill{height:100%;border-radius:999px;background:var(--grad);transition:width .6s}
+.barfill.gold{background:var(--grad-gold)}
+.factor{margin:9px 0}
+.factor .fh{display:flex;justify-content:space-between;font-size:12.5px;margin-bottom:4px;gap:8px}
+.factor .ft{height:11px;background:var(--line);border-radius:999px;overflow:hidden}
+.factor .ff{height:100%;border-radius:999px}
+.pill{display:inline-block;font-size:10px;font-weight:800;padding:2px 8px;border-radius:999px;border:1px solid var(--line2)}
+.pill.on{color:var(--green);border-color:rgba(34,224,122,.45);background:rgba(34,224,122,.09)}
+.pill.est{color:var(--purple);border-color:rgba(139,92,246,.45);background:rgba(139,92,246,.1)}
+.conf-h{color:var(--green);font-weight:800} .conf-m{color:var(--gold);font-weight:800} .conf-l{color:var(--orange);font-weight:800}
+.backlink{display:inline-flex;gap:6px;align-items:center;font-size:12.5px;color:var(--muted);margin:6px 0 10px;cursor:pointer}
+.backlink:hover{color:var(--ink)}
+.kv{display:flex;justify-content:space-between;gap:10px;padding:9px 0;border-bottom:1px solid var(--line);font-size:13px}
+.kv:last-child{border-bottom:none} .kv .k{color:var(--muted)}
+.disclaimer{font-size:11.5px;color:var(--faint);border-left:3px solid var(--purple);padding:3px 0 3px 11px;margin:9px 0;background:rgba(139,92,246,.05)}
+.why-btn{border:1px solid var(--line2);background:transparent;color:var(--teal);border-radius:10px;padding:8px 12px;font-size:12px;font-weight:800;margin-top:10px}
+.why-btn:hover{background:rgba(0,224,168,.08)}
+footer{border-top:1px solid var(--line);margin-top:34px;padding:22px 0 44px;color:var(--muted);font-size:12px}
+.chip-row{display:flex;flex-wrap:wrap;gap:8px}
+.teamgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(168px,1fr));gap:11px}
+.teamcard{background:linear-gradient(180deg,var(--panel),var(--panel2));border:1px solid var(--line);border-radius:14px;padding:12px;cursor:pointer;transition:.16s}
+.teamcard:hover{border-color:var(--teal);transform:translateY(-3px)}
+.status-tag{font-size:9.5px;font-weight:900;padding:3px 8px;border-radius:999px;letter-spacing:.3px}
+.tag-r16{background:rgba(34,224,122,.15);color:var(--green)}
+.tag-today{background:rgba(255,194,60,.18);color:var(--gold)}
+.tag-r32{background:rgba(255,90,106,.13);color:var(--red)}
+.tag-group{background:rgba(91,107,136,.18);color:var(--muted)}
+.timeline{list-style:none;margin:0;padding:0}
+.timeline li{display:flex;gap:10px;padding:9px 0;border-bottom:1px solid var(--line);font-size:13px}
+.trend-up{color:var(--green);font-weight:900}.trend-flat{color:var(--muted)}.trend-warn{color:var(--gold)}
+.hidden{display:none!important}
+/* share + mobile */
+.tb-actions{display:flex; align-items:center; gap:8px; flex-wrap:wrap}
+.fab{position:fixed; right:16px; bottom:18px; width:58px; height:58px; border-radius:50%; border:none;
+  background:var(--grad); color:#04140f; font-size:26px; box-shadow:0 12px 30px rgba(0,0,0,.5); z-index:60;
+  display:none; cursor:pointer; animation:floaty 4s ease-in-out infinite}
+.swipehint{display:none; text-align:center; font-size:11px; color:var(--faint); margin:2px 0 8px; letter-spacing:.5px}
+.autobadge{display:inline-flex; align-items:center; gap:9px; font-size:12px; font-weight:700;
+  padding:9px 15px; border-radius:999px; border:1px solid rgba(0,224,168,.4);
+  background:rgba(0,224,168,.08); color:var(--teal); margin-bottom:14px}
+.autobadge .lb{width:8px; height:8px; border-radius:50%; background:var(--green); animation:pulse 1.7s infinite; flex:none}
+.autobadge .ts{color:var(--muted); font-weight:600}
+@media(max-width:860px){ .fab{display:grid; place-items:center} }
+@media(max-width:560px){
+  .brand h1{font-size:15px} .kpi .val{font-size:22px}
+  .barrow{grid-template-columns:104px 1fr 40px} .tn{max-width:104px}
+}
+@media(max-width:640px){
+  .wrap{padding:0 12px}
+  .topbar .row{padding:10px 12px; gap:9px}
+  .brand p{font-size:10.5px}
+  .refresh-meta{display:none}
+  .btn{padding:9px 12px; font-size:12px}
+  .feedpill{padding:7px 10px; font-size:11px}
+  .panel{padding:14px}
+  .section-h{margin:18px 0 10px}
+  .section-h h2{font-size:15px}
+  .hero .inner{padding:22px 16px; gap:16px}
+  th,td{padding:9px 8px}
+  .swipehint{display:block}
+  .fab{width:54px; height:54px; bottom:16px; right:14px}
+  .filters input.search{min-width:100%}
+  .filters select{flex:1}
+}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <div class="row">
+    <div class="brand">
+      <div class="badge-cup">🏆</div>
+      <div>
+        <h1>FIFA World Cup 2026</h1>
+        <p>Matches, live data, predictions and knockout path in Qatar time</p>
+      </div>
+    </div>
+    <div class="tb-spacer"></div>
+    <div class="tb-actions">
+      <div class="feedpill" id="feedPill"><span class="dot manual" id="feedDot"></span><span id="feedText">Manual · Snapshot</span></div>
+      <button class="btn" id="shareBtn">📲 Share</button>
+      <button class="btn primary" id="refreshBtn">↻ Refresh</button>
+      <div class="refresh-meta" id="refreshMeta">—</div>
+    </div>
+  </div>
+  <div class="nav" id="nav">
+    <a data-route="home">🏠 Home</a>
+    <a data-route="matches">⚽ Matches</a>
+    <a data-route="bracket">🗺️ Bracket</a>
+    <a data-route="predictions">📈 Predictions</a>
+    <a data-route="leaderboard">👟 Golden Boot</a>
+    <a data-route="watch">⭐ Players to Watch</a>
+    <a data-route="teams">🌍 Teams</a>
+  </div>
+</div>
+
+<main class="wrap" id="view"></main>
+<button class="fab" id="fabShare" aria-label="Share to WhatsApp">📲</button>
+<footer class="wrap" id="footer"></footer>
+
+<!-- AUTOMATION HOOK: the GitHub Actions build writes the latest results here.
+     Leave the tag in place. Empty = the dashboard uses its built-in snapshot. -->
+<script id="wc-data" type="application/json"></script>
+
+<script>
+"use strict";
+/* ============================================================================
+   FIFA WORLD CUP 2026 PLANNER  — vibrant premium dashboard
+   DATA INTEGRITY
+   - Verified snapshot from OFFICIAL FIFA + ESPN, 2026-07-03 (every record cited).
+   - Nothing is fabricated. Live-only fields with no verified value show an
+     explicit "Not available yet / Live feed unavailable" state.
+   - Probabilities are computed by a TRANSPARENT 5-factor model and labelled
+     "model estimate" — never presented as official FIFA predictions.
+   - A provider abstraction layer lets a licensed real-time feed supersede the
+     snapshot (Sportradar / Opta-Stats Perform / API-Football / Sportmonks).
+   ========================================================================== */
+
+/* ---------------------- SOURCES ------------------------------------------- */
+const SRC = {
+  fifaHome:{name:"FIFA — World Cup 2026 (official)", url:"https://www.fifa.com/en/tournaments/mens/worldcup", updated:"2026-07-03T10:37Z"},
+  fifaFix:{name:"FIFA — Schedule, fixtures & results", url:"https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026/scores-fixtures", updated:"2026-07-03T02:45Z"},
+  fifaVen:{name:"FIFA — Stadiums", url:"https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026/articles/world-cup-2026-stadiums-fifa-soccer-football-mexico-usa-canada", updated:"2025-07-15"},
+  fifaGrp:{name:"FIFA — Groups & qualified teams", url:"https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026/articles/fifa-world-cup-2026-hosts-cities-dates-usa-mexico-canada", updated:"2026-06-09"},
+  espn:{name:"ESPN — WC2026 fixtures, results & bracket", url:"https://www.espn.com/soccer/story/_/id/48939282/2026-fifa-world-cup-fixtures-results-match-schedule-group-stage-knockout-rounds-bracket", updated:"2026-07-03T05:19Z"},
+  footballdata:{name:"football-data.org (live results API)", url:"https://www.football-data.org/", updated:"2026-07-03T11:03Z"},
+  model:{name:"Planner model (transparent estimate)", url:"https://www.fifa.com/en/tournaments/mens/worldcup", updated:"2026-07-03T11:03Z"}
+};
+let SNAPSHOT_AT = "2026-07-03T11:03Z";
+
+/* ---------------------- VENUES -------------------------------------------- */
+const VEN = {
+  mexicocity:{fifa:"Mexico City Stadium", name:"Estadio Azteca", city:"Mexico City", country:"Mexico", cap:87000, off:-6},
+  guadalajara:{fifa:"Guadalajara Stadium", name:"Estadio Akron", city:"Guadalajara (Zapopan)", country:"Mexico", cap:48000, off:-6},
+  monterrey:{fifa:"Monterrey Stadium", name:"Estadio BBVA", city:"Monterrey (Guadalupe)", country:"Mexico", cap:53500, off:-6},
+  toronto:{fifa:"Toronto Stadium", name:"BMO Field", city:"Toronto", country:"Canada", cap:45700, off:-4},
+  vancouver:{fifa:"BC Place Vancouver", name:"BC Place", city:"Vancouver", country:"Canada", cap:54000, off:-7},
+  atlanta:{fifa:"Atlanta Stadium", name:"Mercedes-Benz Stadium", city:"Atlanta", country:"USA", cap:75000, off:-4},
+  boston:{fifa:"Boston Stadium", name:"Gillette Stadium", city:"Foxborough", country:"USA", cap:65000, off:-4},
+  dallas:{fifa:"Dallas Stadium", name:"AT&T Stadium", city:"Arlington", country:"USA", cap:80000, off:-5},
+  houston:{fifa:"Houston Stadium", name:"NRG Stadium", city:"Houston", country:"USA", cap:72000, off:-5},
+  kansascity:{fifa:"Kansas City Stadium", name:"Arrowhead Stadium", city:"Kansas City", country:"USA", cap:76000, off:-5},
+  losangeles:{fifa:"Los Angeles Stadium", name:"SoFi Stadium", city:"Inglewood", country:"USA", cap:70000, off:-7},
+  miami:{fifa:"Miami Stadium", name:"Hard Rock Stadium", city:"Miami Gardens", country:"USA", cap:65000, off:-4},
+  nynj:{fifa:"New York New Jersey Stadium", name:"MetLife Stadium", city:"East Rutherford", country:"USA", cap:82500, off:-4},
+  philadelphia:{fifa:"Philadelphia Stadium", name:"Lincoln Financial Field", city:"Philadelphia", country:"USA", cap:69000, off:-4},
+  sfbay:{fifa:"San Francisco Bay Area Stadium", name:"Levi's Stadium", city:"Santa Clara", country:"USA", cap:71000, off:-7},
+  seattle:{fifa:"Seattle Stadium", name:"Lumen Field", city:"Seattle", country:"USA", cap:69000, off:-7}
+};
+
+/* ---------------------- TEAMS (48) ---------------------------------------- */
+const T = {
+  MEX:{n:"Mexico",g:"A",r:"R16"}, RSA:{n:"South Africa",g:"A",r:"R32"}, KOR:{n:"Korea Republic",g:"A",r:"GROUP"}, CZE:{n:"Czechia",g:"A",r:"GROUP"},
+  CAN:{n:"Canada",g:"B",r:"R16"}, SUI:{n:"Switzerland",g:"B",r:"R16"}, BIH:{n:"Bosnia & Herzegovina",g:"B",r:"R32"}, QAT:{n:"Qatar",g:"B",r:"GROUP"},
+  BRA:{n:"Brazil",g:"C",r:"R16"}, MAR:{n:"Morocco",g:"C",r:"R16"}, HAI:{n:"Haiti",g:"C",r:"GROUP"}, SCO:{n:"Scotland",g:"C",r:"GROUP"},
+  USA:{n:"USA",g:"D",r:"R16"}, PAR:{n:"Paraguay",g:"D",r:"R16"}, AUS:{n:"Australia",g:"D",r:"TODAY"}, TUR:{n:"Türkiye",g:"D",r:"GROUP"},
+  GER:{n:"Germany",g:"E",r:"R32"}, ECU:{n:"Ecuador",g:"E",r:"R32"}, CIV:{n:"Côte d'Ivoire",g:"E",r:"R32"}, CUW:{n:"Curaçao",g:"E",r:"GROUP"},
+  NED:{n:"Netherlands",g:"F",r:"R32"}, JPN:{n:"Japan",g:"F",r:"R32"}, SWE:{n:"Sweden",g:"F",r:"R32"}, TUN:{n:"Tunisia",g:"F",r:"GROUP"},
+  BEL:{n:"Belgium",g:"G",r:"R16"}, EGY:{n:"Egypt",g:"G",r:"TODAY"}, IRN:{n:"IR Iran",g:"G",r:"GROUP"}, NZL:{n:"New Zealand",g:"G",r:"GROUP"},
+  ESP:{n:"Spain",g:"H",r:"R16"}, CPV:{n:"Cabo Verde",g:"H",r:"TODAY"}, KSA:{n:"Saudi Arabia",g:"H",r:"GROUP"}, URU:{n:"Uruguay",g:"H",r:"GROUP"},
+  FRA:{n:"France",g:"I",r:"R16"}, NOR:{n:"Norway",g:"I",r:"R16"}, SEN:{n:"Senegal",g:"I",r:"R32"}, IRQ:{n:"Iraq",g:"I",r:"GROUP"},
+  ARG:{n:"Argentina",g:"J",r:"TODAY"}, AUT:{n:"Austria",g:"J",r:"R32"}, ALG:{n:"Algeria",g:"J",r:"R32"}, JOR:{n:"Jordan",g:"J",r:"GROUP"},
+  POR:{n:"Portugal",g:"K",r:"R16"}, COL:{n:"Colombia",g:"K",r:"TODAY"}, COD:{n:"Congo DR",g:"K",r:"R32"}, UZB:{n:"Uzbekistan",g:"K",r:"GROUP"},
+  ENG:{n:"England",g:"L",r:"R16"}, CRO:{n:"Croatia",g:"L",r:"R32"}, GHA:{n:"Ghana",g:"L",r:"TODAY"}, PAN:{n:"Panama",g:"L",r:"GROUP"}
+};
+
+/* ---------------------- GEO (real lat,lon) — for mini map locators -------- */
+const GEO = {
+  MEX:[23.6,-102.5],RSA:[-30.6,22.9],KOR:[36.5,127.9],CZE:[49.8,15.5],CAN:[56.1,-106.3],SUI:[46.8,8.2],BIH:[43.9,17.7],QAT:[25.3,51.2],
+  BRA:[-14.2,-51.9],MAR:[31.8,-7.1],HAI:[18.9,-72.3],SCO:[56.5,-4.2],USA:[37.1,-95.7],PAR:[-23.4,-58.4],AUS:[-25.3,133.8],TUR:[39.0,35.2],
+  GER:[51.2,10.4],ECU:[-1.8,-78.2],CIV:[7.5,-5.5],CUW:[12.2,-69.0],NED:[52.1,5.3],JPN:[36.2,138.3],SWE:[60.1,18.6],TUN:[33.9,9.5],
+  BEL:[50.5,4.5],EGY:[26.8,30.8],IRN:[32.4,53.7],NZL:[-40.9,174.9],ESP:[40.5,-3.7],CPV:[16.0,-24.0],KSA:[23.9,45.1],URU:[-32.5,-55.8],
+  FRA:[46.2,2.2],NOR:[60.5,8.5],SEN:[14.5,-14.5],IRQ:[33.2,43.7],ARG:[-38.4,-63.6],AUT:[47.5,14.6],ALG:[28.0,1.7],JOR:[30.6,36.2],
+  POR:[39.4,-8.2],COL:[4.6,-74.3],COD:[-4.0,21.8],UZB:[41.4,64.6],ENG:[52.5,-1.5],CRO:[45.1,15.2],GHA:[7.9,-1.0],PAN:[8.5,-80.8]
+};
+
+/* ---------------------- FLAG colour chips (stylized) ---------------------- */
+const FLAG = {
+  MEX:"v:#006847,#ffffff,#ce1126",RSA:"h:#007749,#ffb612,#000000",KOR:"b:#ffffff,#cd2e3a,#0047a0",CZE:"b:#11457e,#ffffff,#d7141a",
+  CAN:"v:#ff0000,#ffffff,#ff0000",SUI:"b:#d52b1e,#ffffff",BIH:"b:#002395,#fecb00",QAT:"v:#8a1538,#ffffff",
+  BRA:"b:#009c3b,#ffdf00,#002776",MAR:"b:#c1272d,#006233",HAI:"h:#00209f,#d21034",SCO:"b:#0065bf,#ffffff",
+  USA:"h:#b22234,#ffffff,#3c3b6e",PAR:"h:#d52b1e,#ffffff,#0038a8",AUS:"b:#00008b,#ffffff,#ff0000",TUR:"b:#e30a17,#ffffff",
+  GER:"h:#000000,#dd0000,#ffce00",ECU:"h:#ffdd00,#034ea2,#ed1c24",CIV:"v:#f77f00,#ffffff,#009e60",CUW:"b:#002b7f,#f9d90f",
+  NED:"h:#ae1c28,#ffffff,#21468b",JPN:"b:#ffffff,#bc002d",SWE:"b:#006aa7,#fecc00",TUN:"b:#e70013,#ffffff",
+  BEL:"v:#000000,#fdda24,#ef3340",EGY:"h:#ce1126,#ffffff,#000000",IRN:"h:#239f40,#ffffff,#da0000",NZL:"b:#00247d,#cc142b",
+  ESP:"h:#aa151b,#f1bf00,#aa151b",CPV:"h:#003893,#ffffff,#cf2027",KSA:"b:#006c35,#ffffff",URU:"b:#ffffff,#0038a8,#fcd116",
+  FRA:"v:#0055a4,#ffffff,#ef4135",NOR:"b:#ba0c2f,#ffffff,#00205b",SEN:"v:#00853f,#fdef42,#e31b23",IRQ:"h:#ce1126,#ffffff,#000000",
+  ARG:"h:#74acdf,#ffffff,#74acdf",AUT:"h:#ed2939,#ffffff,#ed2939",ALG:"v:#006233,#ffffff,#d21034",JOR:"h:#000000,#ffffff,#007a3d",
+  POR:"v:#006600,#ff0000",COL:"h:#fcd116,#003893,#ce1126",COD:"b:#007fff,#f7d618,#ce1021",UZB:"h:#1eb53a,#ffffff,#0099b5",
+  ENG:"b:#ffffff,#ce1124",CRO:"b:#ff0000,#ffffff,#171796",GHA:"h:#ce1126,#fcd116,#006b3f",PAN:"b:#ffffff,#005293,#d21034"
+};
+
+/* ---------------------- MODEL INPUTS (public, disclosed) -----------------
+   HIST = historical World Cup pedigree (public record). TIER = pre-tournament
+   strength proxy (FIFA-ranking / reputable-rating tier). Both 0-100, labelled
+   as model inputs — editable, not official numbers.                          */
+const HIST = {BRA:98,GER:94,ARG:93,FRA:90,NED:84,ESP:82,ENG:80,URU:78,CRO:76,POR:66,MEX:64,BEL:62,MAR:62,SWE:60,CZE:58,AUT:58,SUI:56,TUR:54,GHA:52,SEN:52,USA:52,JPN:50,KOR:50,PAR:46,COL:46,AUS:44,SCO:40,RSA:40,NOR:40,ALG:40,ECU:38,IRN:36,CIV:36,EGY:30,KSA:30,COD:30,CAN:30,BIH:28,IRQ:26,NZL:24,HAI:22,QAT:20,PAN:18,UZB:16,JOR:14,CPV:12,CUW:10,TUN:34};
+const TIER = {ARG:96,FRA:95,ESP:92,BRA:90,ENG:90,POR:86,NED:84,GER:82,BEL:80,NOR:80,CRO:76,URU:76,COL:76,MAR:76,JPN:72,SEN:72,SUI:72,MEX:70,AUT:68,TUR:68,USA:68,ECU:66,KOR:66,CAN:66,CZE:64,SWE:64,EGY:64,IRN:62,ALG:62,CIV:62,BIH:60,SCO:60,PAR:60,TUN:60,RSA:58,COD:58,GHA:58,AUS:58,KSA:54,QAT:54,IRQ:50,UZB:50,PAN:50,JOR:48,CPV:46,NZL:46,HAI:42,CUW:42};
+const STAR = {ARG:18,FRA:16,NOR:18,BRA:14,ENG:10,POR:8,USA:6,MAR:6}; // cited marquee-player impact
+
+/* ---------------------- MATCHES (knockout stage) -------------------------- */
+const M = [
+  {id:"r32a", st:"R32", a:"CAN", b:"RSA", sc:[1,0], status:"FT", date:"2026-06-28", ven:null, src:["espn","fifaHome"]},
+  {id:"r32b", st:"R32", a:"BRA", b:"JPN", sc:[2,1], status:"FT", date:"2026-06-29", koUTC:"2026-06-29T17:00Z", ven:"houston", src:["espn"]},
+  {id:"r32c", st:"R32", a:"GER", b:"PAR", sc:[1,1], pens:[3,4], status:"FT", date:"2026-06-29", koUTC:"2026-06-29T20:30Z", ven:"boston", src:["espn"], note:"Paraguay won 4-3 on penalties"},
+  {id:"r32d", st:"R32", a:"NED", b:"MAR", sc:[1,1], pens:[2,3], status:"FT", date:"2026-06-29", koUTC:"2026-06-30T01:00Z", ven:"monterrey", src:["espn"], note:"Morocco won 3-2 on penalties"},
+  {id:"r32e", st:"R32", a:"CIV", b:"NOR", sc:[1,2], status:"FT", date:"2026-06-30", koUTC:"2026-06-30T17:00Z", ven:"dallas", src:["espn"]},
+  {id:"r32f", st:"R32", a:"FRA", b:"SWE", sc:[3,0], status:"FT", date:"2026-06-30", koUTC:"2026-06-30T21:00Z", ven:"nynj", src:["espn"]},
+  {id:"r32g", st:"R32", a:"MEX", b:"ECU", sc:[2,0], status:"FT", date:"2026-06-30", koUTC:"2026-07-01T01:00Z", ven:"mexicocity", src:["espn"]},
+  {id:"r32h", st:"R32", a:"ENG", b:"COD", sc:[2,1], status:"FT", date:"2026-07-01", ven:"atlanta", src:["espn"]},
+  {id:"r32i", st:"R32", a:"BEL", b:"SEN", sc:[3,2], status:"FT", date:"2026-07-01", ven:"seattle", src:["espn"], note:"After extra time"},
+  {id:"r32j", st:"R32", a:"USA", b:"BIH", sc:[2,0], status:"FT", date:"2026-07-01", ven:"sfbay", src:["espn"]},
+  {id:"r32k", st:"R32", a:"ESP", b:"AUT", sc:[3,0], status:"FT", date:"2026-07-02", ven:"losangeles", src:["espn"]},
+  {id:"r32l", st:"R32", a:"POR", b:"CRO", sc:[2,1], status:"FT", date:"2026-07-02", ven:"toronto", src:["espn"]},
+  {id:"r32m", st:"R32", a:"SUI", b:"ALG", sc:[2,0], status:"FT", date:"2026-07-02", ven:"vancouver", src:["espn"]},
+  {id:"r32n", st:"R32", a:"AUS", b:"EGY", status:"TODAY", date:"2026-07-03", koUTC:"2026-07-03T18:00Z", ven:"dallas", src:["espn"]},
+  {id:"r32o", st:"R32", a:"ARG", b:"CPV", status:"TODAY", date:"2026-07-03", koUTC:"2026-07-03T22:00Z", ven:"miami", src:["espn"]},
+  {id:"r32p", st:"R32", a:"COL", b:"GHA", status:"TODAY", date:"2026-07-03", koUTC:"2026-07-04T01:30Z", ven:"kansascity", src:["espn"]},
+  {id:"r16_89", st:"R16", num:89, a:"PAR", b:"FRA", status:"SCHED", date:"2026-07-04", koUTC:"2026-07-04T21:00Z", ven:"philadelphia", src:["espn"]},
+  {id:"r16_90", st:"R16", num:90, a:"CAN", b:"MAR", status:"SCHED", date:"2026-07-04", koUTC:"2026-07-04T17:00Z", ven:"houston", src:["espn"]},
+  {id:"r16_91", st:"R16", num:91, a:"BRA", b:"NOR", status:"SCHED", date:"2026-07-05", koUTC:"2026-07-05T20:00Z", ven:"nynj", src:["espn"]},
+  {id:"r16_92", st:"R16", num:92, a:"MEX", b:"ENG", status:"SCHED", date:"2026-07-05", koUTC:"2026-07-06T00:00Z", ven:"mexicocity", src:["espn"]},
+  {id:"r16_93", st:"R16", num:93, a:"POR", b:"ESP", status:"SCHED", date:"2026-07-06", koUTC:"2026-07-06T19:00Z", ven:"dallas", src:["espn"]},
+  {id:"r16_94", st:"R16", num:94, a:"USA", b:"BEL", status:"SCHED", date:"2026-07-06", koUTC:"2026-07-06T21:00Z", ven:"seattle", src:["espn"]},
+  {id:"r16_95", st:"R16", num:95, af:"W · Argentina / Cabo Verde", bf:"W · Australia / Egypt", feed:["r32o","r32n"], status:"SCHED", date:"2026-07-07", koUTC:"2026-07-07T16:00Z", ven:"atlanta", src:["espn"]},
+  {id:"r16_96", st:"R16", num:96, a:"SUI", bf:"W · Colombia / Ghana", feed:[null,"r32p"], status:"SCHED", date:"2026-07-07", koUTC:"2026-07-07T20:00Z", ven:"vancouver", src:["espn"]},
+  {id:"qf1", st:"QF", af:"W · Match 89", bf:"W · Match 90", feed:["r16_89","r16_90"], status:"SCHED", date:"2026-07-09", koUTC:"2026-07-09T20:00Z", ven:"boston", src:["espn"]},
+  {id:"qf2", st:"QF", af:"W · Match 93", bf:"W · Match 94", feed:["r16_93","r16_94"], status:"SCHED", date:"2026-07-10", koUTC:"2026-07-10T19:00Z", ven:"losangeles", src:["espn"]},
+  {id:"qf3", st:"QF", af:"W · Match 91", bf:"W · Match 92", feed:["r16_91","r16_92"], status:"SCHED", date:"2026-07-11", koUTC:"2026-07-11T21:00Z", ven:"miami", src:["espn"]},
+  {id:"qf4", st:"QF", af:"W · Match 95", bf:"W · Match 96", feed:["r16_95","r16_96"], status:"SCHED", date:"2026-07-11", koUTC:"2026-07-12T01:00Z", ven:"kansascity", src:["espn"]},
+  {id:"sf1", st:"SF", af:"W · Quarter-final", bf:"W · Quarter-final", feed:["qf1","qf2"], status:"SCHED", date:"2026-07-14", ven:"dallas", src:["fifaFix","espn"]},
+  {id:"sf2", st:"SF", af:"W · Quarter-final", bf:"W · Quarter-final", feed:["qf3","qf4"], status:"SCHED", date:"2026-07-15", ven:"atlanta", src:["fifaFix"]},
+  {id:"tp", st:"3RD", af:"L · Semi-final", bf:"L · Semi-final", feedLoser:["sf1","sf2"], status:"SCHED", date:"2026-07-18", ven:"miami", src:["fifaFix"]},
+  {id:"final", st:"FINAL", af:"W · Semi-final", bf:"W · Semi-final", feed:["sf1","sf2"], status:"SCHED", date:"2026-07-19", ven:"nynj", src:["fifaFix","fifaHome"]}
+];
+/* ---- Live-data injection: GitHub Actions writes fresh results into #wc-data.
+   Falls back silently to the built-in snapshot above if absent or invalid. ---- */
+(function(){ try{
+  var el=document.getElementById("wc-data"); if(!el) return;
+  var txt=(el.textContent||"").trim(); if(!txt) return;
+  var D=JSON.parse(txt);
+  if(Array.isArray(D.matches)&&D.matches.length){ M.length=0; D.matches.forEach(function(m){ M.push(m); }); }
+  if(Array.isArray(D.results)){ var _byId={}; M.forEach(function(m){ _byId[m.id]=m; });
+    D.results.forEach(function(p){ var m=_byId[p.id]; if(!m) return;
+      if(p.a)m.a=p.a; if(p.b)m.b=p.b; if(p.status)m.status=p.status;
+      if(p.sc)m.sc=p.sc; if(p.pens)m.pens=p.pens; if(p.koUTC)m.koUTC=p.koUTC; if(p.src)m.src=p.src; }); }
+  if(D.teamStatus){ Object.keys(D.teamStatus).forEach(function(c){ if(T[c]) T[c].r=D.teamStatus[c]; }); }
+  if(typeof D.updatedAt==="string") SNAPSHOT_AT=D.updatedAt;
+  if(D.sources){ Object.keys(D.sources).forEach(function(k){ if(SRC[k]) SRC[k].updated=D.sources[k]; }); }
+}catch(e){ if(window.console) console.warn("wc-data injection skipped:", e); } })();
+/* Fill knockout slots forward from results (winner of a feeder tie advances),
+   then derive each team's tournament status from the bracket. Runs for both the
+   built-in snapshot and any injected data, so the whole page stays consistent. */
+function _win(m){ if(m.status!=="FT"||!m.sc) return null; var aw=m.sc[0]>m.sc[1]; if(m.pens) aw=m.pens[0]>m.pens[1]; return aw?m.a:m.b; }
+function _lose(m){ var w=_win(m); if(!w) return null; return w===m.a?m.b:m.a; }
+function resolveBracketTeams(){ var byId={}; M.forEach(function(m){ byId[m.id]=m; });
+  for(var pass=0; pass<8; pass++){ M.forEach(function(m){
+    if(m.feed){ if(!m.a&&byId[m.feed[0]]){ var w0=_win(byId[m.feed[0]]); if(w0)m.a=w0; }
+                if(!m.b&&byId[m.feed[1]]){ var w1=_win(byId[m.feed[1]]); if(w1)m.b=w1; } }
+    if(m.feedLoser){ if(!m.a&&byId[m.feedLoser[0]]){ var l0=_lose(byId[m.feedLoser[0]]); if(l0)m.a=l0; }
+                     if(!m.b&&byId[m.feedLoser[1]]){ var l1=_lose(byId[m.feedLoser[1]]); if(l1)m.b=l1; } }
+  }); }
+}
+function deriveTeamStatus(){
+  var rank={R32:1,R16:2,QF:3,SF:4,"3RD":4,FINAL:5};
+  var adv={R32:"R16",R16:"QF",QF:"SF",SF:"FINAL"};
+  var out={R32:"R32",R16:"OUT16",QF:"OUT8",SF:"OUT4",FINAL:"OUT2"};
+  var aliveStage={R16:"R16",QF:"QF",SF:"SF","3RD":"SF",FINAL:"FINAL"};
+  Object.keys(T).forEach(function(code){
+    var best=null; M.forEach(function(m){ if(m.a===code||m.b===code){ var rk=rank[m.st]||0; if(!best||rk>best.rank) best={m:m,rank:rk}; } });
+    if(!best){ T[code].r="GROUP"; return; }
+    var m=best.m;
+    if(m.status==="FT"){ var w=_win(m);
+      if(w===code){ T[code].r = m.st==="FINAL" ? "WIN" : (adv[m.st]||"R16"); }
+      else { T[code].r = out[m.st]||"R32"; }
+    } else { T[code].r = m.st==="R32" ? "TODAY" : (aliveStage[m.st]||"R16"); }
+  });
+}
+resolveBracketTeams(); deriveTeamStatus();
+const STAGE_LABEL = {R32:"Round of 32", R16:"Round of 16", QF:"Quarter-final", SF:"Semi-final", "3RD":"Third-place play-off", FINAL:"Final"};
+const STAGE_ORDER = ["R32","R16","QF","SF","3RD","FINAL"];
+
+/* ============================================================================
+   PROVIDER ABSTRACTION LAYER
+   ========================================================================== */
+class DataProvider{ constructor(n){this.name=n;} isConfigured(){return false;} health(){return "failed";}
+  async fixtures(){throw new Error(this.name+" not configured");} async live(){throw new Error(this.name+" not configured");} }
+class ManualSnapshotProvider extends DataProvider{ constructor(){super("Manual snapshot (FIFA + ESPN, 2026-07-03)");}
+  isConfigured(){return true;} health(){return "manual";} async fixtures(){return {matches:M,at:SNAPSHOT_AT};} async live(){return null;} }
+function stubProvider(label){ return new (class extends DataProvider{ constructor(){super(label);this.key=null;this.base=null;}
+  isConfigured(){return !!(this.key&&this.base);} health(){return this.isConfigured()?"live":"failed";}
+  async fixtures(){if(!this.isConfigured())throw new Error(label+" needs API key");}
+  async live(){if(!this.isConfigured())throw new Error(label+" needs API key");} })(); }
+const PROVIDERS={manual:new ManualSnapshotProvider(),sportradar:stubProvider("Sportradar"),opta:stubProvider("Opta / Stats Perform"),apifootball:stubProvider("API-Football"),sportmonks:stubProvider("Sportmonks")};
+const Registry={ activeKey:"manual", get active(){return PROVIDERS[this.activeKey];},
+  resolve(){ for(const k of ["sportradar","opta","apifootball","sportmonks"]){ if(PROVIDERS[k].isConfigured()){this.activeKey=k;return;} } this.activeKey="manual"; },
+  feedHealth(){ const anyLive=M.some(m=>m.status==="LIVE"); if(this.active.health()==="live") return anyLive?"live":"delayed"; return this.active.health(); } };
+
+/* ============================================================================
+   TIME — Qatar time (Asia/Qatar, UTC+03:00)
+   ========================================================================== */
+const QOFF=3;
+const DAYS=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+const MON=["January","February","March","April","May","June","July","August","September","October","November","December"];
+function parseUTC(iso){const m=/^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})Z$/.exec(iso);if(!m)return null;return Date.UTC(+m[1],+m[2]-1,+m[3],+m[4],+m[5]);}
+function shift(ms,o){return new Date(ms+o*3600*1000);}
+function pad(n){return(n<10?"0":"")+n;}
+function qatarFull(iso){const ms=parseUTC(iso);if(ms==null)return null;const d=shift(ms,QOFF);
+  return DAYS[d.getUTCDay()]+", "+d.getUTCDate()+" "+MON[d.getUTCMonth()]+" "+d.getUTCFullYear()+" · "+pad(d.getUTCHours())+":"+pad(d.getUTCMinutes())+" Qatar time";}
+function qatarShort(iso){const ms=parseUTC(iso);if(ms==null)return null;const d=shift(ms,QOFF);return pad(d.getUTCHours())+":"+pad(d.getUTCMinutes());}
+function venueLocal(iso,off){const ms=parseUTC(iso);if(ms==null)return null;const d=shift(ms,off);return pad(d.getUTCHours())+":"+pad(d.getUTCMinutes())+" local";}
+function niceDate(dstr){const p=/(\d{4})-(\d{2})-(\d{2})/.exec(dstr);if(!p)return dstr;const d=new Date(Date.UTC(+p[1],+p[2]-1,+p[3]));return DAYS[d.getUTCDay()]+", "+d.getUTCDate()+" "+MON[d.getUTCMonth()]+" "+d.getUTCFullYear();}
+function relTime(iso){const ms=parseUTC(iso);if(ms==null)return "";const diff=ms-Date.now();const h=Math.round(diff/3600000);
+  if(Math.abs(h)<1){const mn=Math.round(diff/60000);return mn>=0?("in "+mn+" min"):(Math.abs(mn)+" min ago");}
+  if(h>0&&h<48)return "in "+h+"h";const dd=Math.round(h/24);return dd>0?("in "+dd+"d"):(Math.abs(dd)+"d ago");}
+function qatarTodayStr(){var d=new Date(Date.now()+QOFF*3600*1000);return d.getUTCFullYear()+"-"+pad(d.getUTCMonth()+1)+"-"+pad(d.getUTCDate());}
+function isToday(m){return m.date===qatarTodayStr();}
+
+/* ============================================================================
+   MODEL — transparent 5-factor estimate (labelled, never official)
+   ========================================================================== */
+function clamp(x,a,b){return Math.max(a,Math.min(b,x));}
+function koResultsFor(code){const out=[];M.forEach(m=>{if(m.status!=="FT")return;if(m.a===code||m.b===code){
+  const isA=m.a===code,gf=isA?m.sc[0]:m.sc[1],ga=isA?m.sc[1]:m.sc[0];let win=gf>ga;
+  if(m.pens){const pa=isA?m.pens[0]:m.pens[1],pb=isA?m.pens[1]:m.pens[0];win=pa>pb;}
+  out.push({gd:gf-ga,win,opp:isA?m.b:m.a,id:m.id,pens:!!m.pens});}});return out;}
+const BASE_SCORE={WIN:100,FINAL:96,OUT2:90,SF:90,OUT4:84,QF:82,OUT8:76,R16:72,OUT16:66,TODAY:56,R32:34,GROUP:15};
+function wcScore(code){const t=T[code];const base=BASE_SCORE[t.r]!=null?BASE_SCORE[t.r]:40;let b=0;
+  koResultsFor(code).forEach(r=>{b+=r.gd*3+(r.win?6:0);});return clamp(base+b,5,100);}
+const ALIVE_STATUS=new Set(["TODAY","R16","QF","SF","FINAL","WIN"]);
+function isAlive(code){return ALIVE_STATUS.has(T[code]?T[code].r:"");}
+/* label · tag class · short label for any team-status value (snapshot + injected) */
+function statusMeta(code){const r=T[code]?T[code].r:"";
+  return ({WIN:["Champions","tag-r16","🏆 Champions"],FINAL:["Reached the Final","tag-r16","Finalist"],
+    SF:["Reached the Semi-finals","tag-r16","Semi-final"],QF:["Reached the Quarter-finals","tag-r16","Quarter-final"],
+    R16:["Into the Round of 16","tag-r16","R16"],TODAY:["Playing Round of 32 today","tag-today","R32 today"],
+    R32:["Eliminated — Round of 32","tag-r32","Out R32"],OUT16:["Eliminated — Round of 16","tag-r32","Out R16"],
+    OUT8:["Eliminated — Quarter-final","tag-r32","Out QF"],OUT4:["Eliminated — Semi-final","tag-r32","Out SF"],
+    OUT2:["Runners-up","tag-r16","Runners-up"],GROUP:["Eliminated — group stage","tag-group","Out group"]}[r])||["In the tournament","tag-group","—"];}
+function currentStageLabel(code){return ({TODAY:"Round of 32 (today)",R16:"Round of 16",QF:"Quarter-final",SF:"Semi-final",FINAL:"Final",WIN:"Champion"}[T[code]?T[code].r:""])||"In tournament";}
+function nextRoundProb(row){const ks=["r16","qf","sf","f","w"];for(let i=0;i<ks.length;i++){if(row[ks[i]]<0.999)return row[ks[i]];}return row.w;}
+function momentum(code){const ko=koResultsFor(code);if(!ko.length)return 0;const last=ko[ko.length-1];
+  if(last.win&&last.gd>=2)return 12;if(last.win&&last.pens)return 2;if(last.win)return 7;return -8;}
+function formScore(code){return clamp(0.55*wcScore(code)+0.35*(TIER[code]||55)+momentum(code),5,100);}
+function availScore(code){return clamp(58+(STAR[code]||0),0,100);}
+function factorScores(code){return {wc:wcScore(code),form:formScore(code),hist:HIST[code]||45,tier:TIER[code]||55,avail:availScore(code)};}
+const WEIGHTS={wc:.35,form:.25,hist:.15,tier:.15,avail:.10};
+function strength(code){const s=factorScores(code);return WEIGHTS.wc*s.wc+WEIGHTS.form*s.form+WEIGHTS.hist*s.hist+WEIGHTS.tier*s.tier+WEIGHTS.avail*s.avail;}
+function matchProb(a,b){const K=42;return 1/(1+Math.pow(10,-((strength(a)-strength(b))/K)));}
+function estimate(a,b,isKO){const pA=matchProb(a,b);
+  if(isKO)return {mode:"advance",a:pA,b:1-pA,note:"Advance % includes extra time & penalties."};
+  const draw=clamp(0.28*(1-Math.abs(pA-0.5)*1.2),0.05,0.32),rem=1-draw;
+  return {mode:"group",a:pA*rem,draw,b:(1-pA)*rem};}
+function preStrength(code){return 0.45*(HIST[code]||45)+0.55*(TIER[code]||55);}
+function biggestUpset(){let best=null;M.forEach(m=>{if(m.status!=="FT")return;
+  const isA_win=(m.pens?m.pens[0]>m.pens[1]:m.sc[0]>m.sc[1]);const w=isA_win?m.a:m.b,l=isA_win?m.b:m.a;
+  const gap=preStrength(l)-preStrength(w);if(gap>0&&(!best||gap>best.gap))best={w,l,gap,m};});return best;}
+
+/* Monte-Carlo champion simulation — bracket-driven from the matches array,
+   so it stays correct as results come in (no hardcoded matchups). */
+let SIM=null,MBYID=null;
+function mById(){if(!MBYID){MBYID={};M.forEach(m=>{MBYID[m.id]=m;});}return MBYID;}
+function actualWinner(m){if(m.status!=="FT"||!m.sc)return null;let aw=m.sc[0]>m.sc[1];if(m.pens)aw=m.pens[0]>m.pens[1];return aw?m.a:m.b;}
+function pick(a,b){if(!a)return b||null;if(!b)return a;return Math.random()<matchProb(a,b)?a:b;}
+function simMatch(id,cache){
+  if(id in cache)return cache[id];
+  const m=mById()[id];if(!m){cache[id]=null;return null;}
+  const a=m.a||(m.feed&&m.feed[0]?simMatch(m.feed[0],cache):null);
+  const b=m.b||(m.feed&&m.feed[1]?simMatch(m.feed[1],cache):null);
+  const w=(m.status==="FT")?actualWinner(m):pick(a,b);
+  cache[id]=w;return w;}
+function championSim(){
+  if(SIM)return SIM;const N=14000;
+  const finalM=M.find(m=>m.st==="FINAL"),finalId=finalM?finalM.id:null;
+  const R16=M.filter(m=>m.st==="R16"),QF=M.filter(m=>m.st==="QF"),SF=M.filter(m=>m.st==="SF");
+  const R={};Object.keys(T).forEach(c=>{R[c]={r16:0,qf:0,sf:0,f:0,w:0};});
+  for(let i=0;i<N;i++){
+    const cache={};
+    if(finalId)simMatch(finalId,cache);
+    R16.concat(QF,SF).forEach(m=>simMatch(m.id,cache));
+    R16.forEach(m=>{const pa=m.a||cache[m.feed&&m.feed[0]],pb=m.b||cache[m.feed&&m.feed[1]];if(pa&&R[pa])R[pa].r16++;if(pb&&R[pb])R[pb].r16++;});
+    R16.forEach(m=>{const w=cache[m.id];if(w&&R[w])R[w].qf++;});
+    QF.forEach(m=>{const w=cache[m.id];if(w&&R[w])R[w].sf++;});
+    SF.forEach(m=>{const w=cache[m.id];if(w&&R[w])R[w].f++;});
+    const champ=finalId?cache[finalId]:null;if(champ&&R[champ])R[champ].w++;
+  }
+  SIM={};Object.keys(R).forEach(c=>{if(isAlive(c))SIM[c]={r16:R[c].r16/N,qf:R[c].qf/N,sf:R[c].sf/N,f:R[c].f/N,w:R[c].w/N};});
+  return SIM;
+}
+function championRows(){const sim=championSim();
+  return Object.keys(sim).map(c=>({c,...sim[c],pre:preStrength(c)})).sort((a,b)=>b.w-a.w);}
+function favorite(){return championRows()[0];}
+function championReason(code){const s=factorScores(code);
+  const items=[["strong WC-2026 run",s.wc],["deep World Cup pedigree",s.hist],["elite squad strength",s.tier],["good current form",s.form],["star-player impact",s.avail]];
+  items.sort((a,b)=>b[1]-a[1]);const cap=t=>t.charAt(0).toUpperCase()+t.slice(1);return cap(items[0][0])+" + "+items[1][0];}
+function trendFor(code){const ko=koResultsFor(code);if(!ko.length)return {cls:"trend-flat",t:"▬ new"};const l=ko[ko.length-1];
+  if(l.win&&l.gd>=2)return {cls:"trend-up",t:"▲ rising"};if(l.win&&l.pens)return {cls:"trend-warn",t:"▲ scraped (pens)"};if(l.win)return {cls:"trend-up",t:"▲ up"};return {cls:"trend-warn",t:"▼ down"};}
+function confidenceLabel(){return {cls:"conf-m",txt:"Medium — model estimate (5 factors, 1 fully verified)"};}
+
+/* ============================================================================
+   BADGES — flag chip + geo-locator globe + code
+   ========================================================================== */
+let _uid=0;const uid=()=>"u"+(++_uid);
+const $=s=>document.querySelector(s);const view=$("#view");
+function esc(s){return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));}
+function teamName(c){return T[c]?T[c].n:c;}
+function flagChip(code,w,h){const f=FLAG[code]||"b:#334155,#475569";const parts=f.split(":");const ty=parts[0];const c=parts[1].split(",");
+  const dir=ty==="v"?"to right":ty==="h"?"to bottom":"135deg";const n=c.length;let st=[];
+  for(let i=0;i<n;i++){st.push(c[i]+" "+(i/n*100).toFixed(1)+"%");st.push(c[i]+" "+((i+1)/n*100).toFixed(1)+"%");}
+  return '<span class="flag" style="width:'+w+'px;height:'+h+'px;background:linear-gradient('+dir+','+st.join(",")+')"></span>';}
+function globe(code,px){const g=GEO[code];if(!g)return "";const r=px/2,cx=r,cy=r;const id=uid();
+  let mx=cx+(g[1]/180)*r*0.86,my=cy-(g[0]/90)*r*0.86;const dx=mx-cx,dy=my-cy,dd=Math.sqrt(dx*dx+dy*dy),lim=r*0.82;
+  if(dd>lim){mx=cx+dx/dd*lim;my=cy+dy/dd*lim;}
+  return '<svg width="'+px+'" height="'+px+'" viewBox="0 0 '+px+' '+px+'" class="globe" role="img" aria-label="'+esc(teamName(code))+' location">'
+    +'<defs><radialGradient id="'+id+'" cx="34%" cy="30%"><stop offset="0%" stop-color="#1e416a"/><stop offset="100%" stop-color="#0a1a2c"/></radialGradient></defs>'
+    +'<circle cx="'+cx+'" cy="'+cy+'" r="'+(r-1)+'" fill="url(#'+id+')" stroke="#31517d" stroke-width="1"/>'
+    +'<ellipse cx="'+cx+'" cy="'+cy+'" rx="'+(r-1)+'" ry="'+((r-1)/2.5)+'" fill="none" stroke="#31517d" stroke-width=".5" opacity=".55"/>'
+    +'<line x1="1.5" y1="'+cy+'" x2="'+(px-1.5)+'" y2="'+cy+'" stroke="#31517d" stroke-width=".5" opacity=".55"/>'
+    +'<circle cx="'+mx.toFixed(1)+'" cy="'+my.toFixed(1)+'" r="'+Math.max(2,px*0.13)+'" fill="#00e0a8" stroke="#04140f" stroke-width=".5">'
+    +'<animate attributeName="opacity" values="1;.35;1" dur="1.8s" repeatCount="indefinite"/></circle></svg>';}
+function hstr(s){let h=5381;for(let i=0;i<s.length;i++)h=((h*33)^s.charCodeAt(i))>>>0;return h;}
+function avatar(name,code,size){size=size||44;
+  const parts=String(name).trim().split(/\s+/);
+  const initials=(parts.length>1?parts[0][0]+parts[parts.length-1][0]:parts[0].slice(0,2)).toUpperCase();
+  const hsh=hstr(name),h1=hsh%360,h2=(hsh>>3)%360;
+  const fw=Math.round(size*0.44),fh=Math.round(size*0.3);
+  return '<span class="avatar" style="width:'+size+'px;height:'+size+'px;font-size:'+(size*0.36).toFixed(0)+'px;'
+    +'background:linear-gradient(135deg,hsl('+h1+',65%,46%),hsl('+h2+',60%,38%))" title="'+esc(name)+'" aria-label="'+esc(name)+'">'+esc(initials)
+    +(code?'<span class="fbadge">'+flagChip(code,fw,fh)+'</span>':'')+'</span>';}
+function teamBadge(code,opt){opt=opt||{};
+  if(!code)return '<span class="tbadge"><span class="flag ph" style="width:26px;height:18px"></span><b class="tc">?</b><span class="tn">'+esc(opt.fallback||"TBD")+'</span></span>';
+  let h='<span class="tbadge">';
+  if(opt.map)h+=globe(code,opt.mapSize||24);
+  h+=flagChip(code,opt.fw||28,opt.fh||19)+'<b class="tc">'+code+'</b>';
+  if(opt.name!==false)h+='<span class="tn">'+esc(teamName(code))+'</span>';
+  if(opt.group)h+='<span class="grp">Grp '+T[code].g+'</span>';
+  h+='</span>';return h;}
+function feederLabel(m,side){return side==="a"?(m.a?teamName(m.a):m.af):(m.b?teamName(m.b):m.bf);}
+function srcChip(k){const s=SRC[k];if(!s)return "";return '<a class="src" href="'+esc(s.url)+'" target="_blank" rel="noopener">🔗 <b>'+esc(s.name)+'</b> · '+esc(s.updated)+'</a>';}
+function srcBar(keys){return '<div class="srcbar">'+(keys||[]).map(srcChip).join("")+'</div>';}
+function statusChip(m){if(m.status==="FT")return '<span class="statuschip st-ft">Full-time</span>';
+  if(m.status==="LIVE")return '<span class="statuschip st-live"><span class="blink"></span>Live</span>';
+  if(isToday(m))return '<span class="statuschip st-today">Today · '+(m.koUTC?qatarShort(m.koUTC)+" QT":"TBC")+'</span>';
+  return '<span class="statuschip st-sched">Scheduled</span>';}
+function stageChip(m){const cls=m.st==="FINAL"?"big":(m.st==="QF"||m.st==="SF"||m.st==="3RD"?"ko":"");return '<span class="stage-chip '+cls+'">'+STAGE_LABEL[m.st]+(m.num?" · #"+m.num:"")+'</span>';}
+function venueLine(m){if(!m.ven)return '<b>Venue TBC</b>';const v=VEN[m.ven];return '<b>'+esc(v.fifa)+'</b> · '+esc(v.name)+', '+esc(v.city);}
+function awaiting(t,b){return '<div class="await"><div class="h">⧗ '+esc(t)+'</div><p>'+esc(b)+'</p></div>';}
+function probMini(m){const known=m.a&&m.b;
+  if(!known)return '<div class="await small"><div class="h">◔ Prediction pending teams</div><p>Both sides must be confirmed before the model estimates this tie.</p></div>';
+  const e=estimate(m.a,m.b,m.st!=="GROUP");
+  if(e.mode==="advance"){const pa=Math.round(e.a*100),pb=100-pa;
+    return '<div class="prob-mini"><i style="width:'+pa+'%;background:var(--teal)"></i><i style="width:'+pb+'%;background:var(--blue)"></i></div>'
+      +'<div class="prob-legend"><span>'+esc(teamName(m.a))+' <b style="color:var(--teal)">'+pa+'%</b></span><span class="est-tag">MODEL EST · advance</span><span><b style="color:#7fb0ff">'+pb+'%</b> '+esc(teamName(m.b))+'</span></div>';}
+  const pa=Math.round(e.a*100),pd=Math.round(e.draw*100),pb=100-pa-pd;
+  return '<div class="prob-mini"><i style="width:'+pa+'%;background:var(--teal)"></i><i style="width:'+pd+'%;background:var(--grey)"></i><i style="width:'+pb+'%;background:var(--blue)"></i></div>'
+    +'<div class="prob-legend"><span>'+pa+'% W</span><span>'+pd+'% D</span><span>'+pb+'% W</span></div>';}
+
+/* ============================================================================
+   ROUTER
+   ========================================================================== */
+const STATE={stage:"All",team:"All",venue:"All",live:false,q:"",view:"cards"};
+function go(r,a){location.hash="#"+r+(a?("/"+a):"");}
+function parseHash(){const h=location.hash.replace(/^#/,"")||"home";const i=h.indexOf("/");return i<0?{r:h}:{r:h.slice(0,i),a:h.slice(i+1)};}
+function setActiveNav(r){document.querySelectorAll("#nav a").forEach(x=>{const dr=x.getAttribute("data-route");
+  x.classList.toggle("active",dr===r||(r==="match"&&dr==="matches")||(r==="team"&&dr==="teams"));});}
+function render(){const {r,a}=parseHash();setActiveNav(r);
+  ({home:renderHome,matches:renderMatches,match:()=>renderMatchDetail(a),bracket:renderBracket,predictions:renderPredictions,
+    leaderboard:renderLeaderboard,watch:renderWatch,teams:renderTeams,team:()=>renderTeam(a)}[r]||renderHome)();}
+
+/* ---------------------- HOME ---------------------------------------------- */
+function upcoming(){return M.filter(m=>m.status==="SCHED"||m.status==="TODAY")
+  .sort((x,y)=>(parseUTC(x.koUTC||x.date+"T00:00Z")||0)-(parseUTC(y.koUTC||y.date+"T00:00Z")||0));}
+function kpi(lab,val,sub,cls,emoji){return '<div class="panel kpi '+(cls||"")+'"><div class="lab">'+lab+'</div><div class="val">'+val+'</div><div class="sub">'+esc(sub||"")+'</div>'+(emoji?'<div class="big-emoji">'+emoji+'</div>':"")+'</div>';}
+function renderHome(){
+  const up=upcoming(),next=up[0];
+  const todays=M.filter(isToday);
+  const live=M.filter(m=>m.status==="LIVE");
+  const fav=favorite(),ups=biggestUpset();
+  let h='';
+  h+='<div class="hero pitch"><div class="inner"><div class="tro">🏆</div><div style="flex:1;min-width:220px">'
+    +'<h2>FIFA World Cup 2026</h2><p>Matches, live data, predictions and knockout path in Qatar time · Hosts:'
+    +'<span class="hero-flags">'+flagChip("CAN",24,15)+' Canada '+flagChip("MEX",24,15)+' Mexico '+flagChip("USA",24,15)+' USA</span></p>'
+    +'<div class="hero-tags"><span class="htag">🌎 48 teams</span><span class="htag">🏟️ 16 venues</span><span class="htag">⚽ 104 matches</span><span class="htag">🕒 Asia/Qatar UTC+3</span><span class="htag">📍 Knockout stage</span></div>'
+    +'</div></div></div>';
+
+  h+='<div class="section-h"><h2><span class="ic">📊</span>Executive summary</h2><span class="small muted">All times · Qatar time</span></div>';
+  h+='<div class="grid cards-kpi">';
+  const nextVal=next?('<span class="kpi-teams">'+(next.a?flagChip(next.a,26,17):"")+esc(feederLabel(next,"a"))+' <span style="opacity:.7">v</span> '+(next.b?flagChip(next.b,26,17):"")+esc(feederLabel(next,"b"))+'</span>'):"—";
+  h+=kpi("Next match", nextVal, next?(qatarFull(next.koUTC||"")||niceDate(next.date))+" · "+relTime(next.koUTC||next.date+"T00:00Z"):"", "hot","⏱️");
+  h+=kpi("Matches today", String(todays.length), niceDate(qatarTodayStr())+" · Qatar time", "tealg","📅");
+  h+=kpi("Live now", String(live.length), live.length?"streaming":"No match live right now", "redg","🔴");
+  h+=kpi("Tournament stage", "Round of 32 → 16", "Knockout phase", "blueg","🧭");
+  h+=kpi("Golden Boot leader", '<span class="playerrow" style="margin-top:2px">'+avatar("Lionel Messi","ARG",44)+'<span>Lionel Messi</span></span>', "Leads adidas Golden Boot race (FIFA) · confidence: High", "goldg");
+  const upVal=ups?('<span class="kpi-teams">'+flagChip(ups.w,24,16)+esc(teamName(ups.w))+' <span style="opacity:.8">⇗</span> '+flagChip(ups.l,24,16)+esc(teamName(ups.l))+'</span>'):"—";
+  h+=kpi("Biggest upset", upVal, ups?("R32 · model-assessed shock (Δ"+Math.round(ups.gap)+") · confidence: Medium"):"", "champg","💥");
+  h+=kpi("Confirmed in Round of 16", "13 / 16", "3 places decided today", "tealg","✅");
+  h+='</div>';
+
+  h+=filterBar();
+
+  // Executive bracket
+  h+='<div class="section-h"><h2><span class="ic">🗺️</span>Executive knockout bracket</h2><a class="small" data-route="bracket" style="cursor:pointer">Open full bracket →</a></div>';
+  h+='<div class="panel pitch">'+bracketLegend()+'<div class="swipehint">⇠ swipe the bracket ⇢</div>'+bracketMarkup(fav?fav.c:null)+'<div class="disclaimer">Gold = model champion favourite &amp; its probability path to the final. Solid green = confirmed qualified · dashed blue = predicted · greyed = eliminated · light grey = pending. Estimates are model-derived, not official FIFA predictions.</div></div>';
+
+  // today's matches
+  h+='<div class="section-h"><h2><span class="ic">⚽</span>Today’s matches</h2><a class="small" data-route="matches" style="cursor:pointer">All matches →</a></div>';
+  h+= todays.length ? '<div class="grid cards-3">'+todays.map(matchCard).join("")+'</div>'
+    : '<div class="grid cards-3">'+upcoming().slice(0,3).map(matchCard).join("")+'</div>';
+
+  // champion chart
+  h+='<div class="section-h"><h2><span class="ic">🏆</span>Champion probability <span class="est-tag">MODEL ESTIMATE</span></h2><a class="small" data-route="predictions" style="cursor:pointer">Full table →</a></div>';
+  h+='<div class="panel">'+championChart(championRows().slice(0,10))+srcBar(["fifaHome","espn","model"])+'</div>';
+
+  view.innerHTML=h;applyFilters();
+}
+
+/* ---------------------- FILTER BAR ---------------------------------------- */
+function filterBar(){
+  const stages=["All","Group Stage","Round of 32","Round of 16","Quarter-finals","Semi-finals","Final"];
+  const teams=Object.keys(T).sort((a,b)=>teamName(a).localeCompare(teamName(b)));
+  let h='<div class="filters" id="filterBar">';
+  h+='<input class="search" id="fq" placeholder="🔎 Search team, player, venue or match #…" value="'+esc(STATE.q)+'">';
+  h+='<select id="fstage">'+stages.map(s=>'<option'+(STATE.stage===s?" selected":"")+'>'+s+'</option>').join("")+'</select>';
+  h+='<select id="fteam"><option value="All">All teams</option>'+teams.map(c=>'<option value="'+c+'"'+(STATE.team===c?" selected":"")+'>'+esc(teamName(c))+'</option>').join("")+'</select>';
+  h+='<select id="fven"><option value="All">All venues</option>'+Object.keys(VEN).map(v=>'<option value="'+v+'"'+(STATE.venue===v?" selected":"")+'>'+esc(VEN[v].fifa)+'</option>').join("")+'</select>';
+  h+='<label class="switch">🔴 Live only<input type="checkbox" id="flive"'+(STATE.live?" checked":"")+'></label>';
+  h+='</div>';return h;}
+function matchMatchesFilters(m){
+  if(STATE.stage!=="All"){const map={"Round of 32":"R32","Round of 16":"R16","Quarter-finals":"QF","Semi-finals":"SF","Final":"FINAL","Group Stage":"GROUP"};
+    if(map[STATE.stage]&&m.st!==map[STATE.stage])return false;}
+  if(STATE.team!=="All"&&m.a!==STATE.team&&m.b!==STATE.team)return false;
+  if(STATE.venue!=="All"&&m.ven!==STATE.venue)return false;
+  if(STATE.live&&m.status!=="LIVE")return false;
+  if(STATE.q){const q=STATE.q.toLowerCase();
+    const hay=[feederLabel(m,"a"),feederLabel(m,"b"),m.a,m.b,m.ven?VEN[m.ven].fifa:"",m.ven?VEN[m.ven].city:"",m.ven?VEN[m.ven].name:"",m.num?("#"+m.num):"",STAGE_LABEL[m.st]].join(" ").toLowerCase();
+    if(hay.indexOf(q)<0)return false;}
+  return true;}
+function applyFilters(){const fb=$("#filterBar");if(!fb)return;const b=(id,ev,fn)=>{const el=$("#"+id);if(el)el.addEventListener(ev,fn);};
+  b("fq","input",e=>{STATE.q=e.target.value;refilter();});
+  b("fstage","change",e=>{STATE.stage=e.target.value;refilter();});
+  b("fteam","change",e=>{STATE.team=e.target.value;refilter();});
+  b("fven","change",e=>{STATE.venue=e.target.value;refilter();});
+  b("flive","change",e=>{STATE.live=e.target.checked;refilter();});}
+function refilter(){const {r}=parseHash();if(r==="matches")renderMatches();else if(r==="home")renderHome();}
+
+/* ---------------------- MATCH CARD ---------------------------------------- */
+function matchCard(m){
+  let h='<div class="panel match pitch" data-mid="'+m.id+'">';
+  h+='<div class="top">'+stageChip(m)+statusChip(m)+'</div>';
+  h+='<div class="teamrow"><div class="side">'+teamBadge(m.a,{map:true,mapSize:26,fallback:m.af})+'</div><span class="score '+(m.status==="FT"?"":"dim")+'">'+(m.sc?m.sc[0]:"–")+'</span></div>';
+  if(m.pens)h+='<div class="pens" style="text-align:right">pens '+m.pens[0]+'–'+m.pens[1]+'</div>';
+  h+='<div class="teamrow"><div class="side">'+teamBadge(m.b,{map:true,mapSize:26,fallback:m.bf})+'</div><span class="score '+(m.status==="FT"?"":"dim")+'">'+(m.sc?m.sc[1]:"–")+'</span></div>';
+  h+='<div class="metarow"><span class="qatar">'+(m.koUTC?qatarFull(m.koUTC):niceDate(m.date)+" · time TBC")+'</span></div>';
+  h+='<div class="metarow"><span>🏟️ '+venueLine(m)+'</span>'+(m.ven?'<span>'+VEN[m.ven].country+'</span>':"")+'</div>';
+  if(m.note)h+='<div class="small muted">↳ '+esc(m.note)+'</div>';
+  h+=probMini(m);
+  h+='<div class="metarow" style="margin-top:2px"><span class="src" style="border:none;padding:0">📡 '+(Registry.feedHealth()==="manual"?"Snapshot feed":"Live-ready")+'</span>'+((m.a&&m.b)?'<span class="src" style="border:none;padding:0">🎯 Est. confidence: Medium</span>':"")+'</div>';
+  h+=srcBar(m.src);
+  h+='</div>';return h;}
+
+/* ---------------------- MATCHES PAGE -------------------------------------- */
+function renderMatches(){
+  let h='<div class="section-h"><h2><span class="ic">⚽</span>Matches</h2><div class="seg"><button data-view="cards" class="'+(STATE.view==="cards"?"on":"")+'">Cards</button><button data-view="table" class="'+(STATE.view==="table"?"on":"")+'">Table</button></div></div>';
+  h+=filterBar();
+  const list=M.filter(matchMatchesFilters).sort((x,y)=>STAGE_ORDER.indexOf(x.st)-STAGE_ORDER.indexOf(y.st)||(parseUTC(x.koUTC||x.date+"T00:00Z")||0)-(parseUTC(y.koUTC||y.date+"T00:00Z")||0));
+  if(!list.length){h+=awaiting("No matches match your filters","Try clearing the team, venue or live-only filter.");view.innerHTML=h;applyFilters();return;}
+  if(STATE.view==="cards"){h+='<div class="grid cards-3">'+list.map(matchCard).join("")+'</div>';}
+  else{
+    h+='<div class="swipehint">⇠ swipe the table ⇢</div>';
+    h+='<div class="tablewrap"><table><thead><tr><th>Stage</th><th>Match</th><th>Qatar kick-off</th><th>Venue</th><th>Status</th><th class="num">Score</th><th class="num">Model est.</th><th>Source</th></tr></thead><tbody>';
+    list.forEach(m=>{let pred="—";if(m.a&&m.b){const e=estimate(m.a,m.b,m.st!=="GROUP");pred=Math.round(e.a*100)+"% / "+Math.round(e.b*100)+"%";}
+      h+='<tr data-mid="'+m.id+'" style="cursor:pointer"><td>'+STAGE_LABEL[m.st]+(m.num?" #"+m.num:"")+'</td>'
+        +'<td><span class="tbadge">'+flagChip(m.a||"",18,12)+' '+esc(feederLabel(m,"a"))+' <span class="muted">v</span> '+flagChip(m.b||"",18,12)+' '+esc(feederLabel(m,"b"))+'</span></td>'
+        +'<td>'+(m.koUTC?qatarShort(m.koUTC)+" · "+niceDate(m.date):niceDate(m.date)+" · TBC")+'</td>'
+        +'<td>'+(m.ven?esc(VEN[m.ven].fifa+" · "+VEN[m.ven].city):"TBC")+'</td>'
+        +'<td>'+(m.status==="FT"?"Full-time":m.status==="TODAY"?"Today":"Scheduled")+'</td>'
+        +'<td class="num">'+(m.sc?m.sc[0]+"–"+m.sc[1]+(m.pens?" ("+m.pens[0]+"–"+m.pens[1]+"p)":""):"–")+'</td>'
+        +'<td class="num">'+pred+'</td>'
+        +'<td>'+(m.src&&m.src[0]?esc(SRC[m.src[0]].name.split("—")[0].trim()):"")+'</td></tr>';});
+    h+='</tbody></table></div><div class="disclaimer">“Model est.” = estimated advance/win % (Team A / Team B), model-derived — not official FIFA predictions.</div>';
+  }
+  view.innerHTML=h;applyFilters();
+  document.querySelectorAll("[data-view]").forEach(x=>x.addEventListener("click",()=>{STATE.view=x.getAttribute("data-view");renderMatches();}));
+}
+
+/* ---------------------- MATCH DETAIL -------------------------------------- */
+function renderMatchDetail(id){
+  const m=M.find(x=>x.id===id);if(!m){view.innerHTML=awaiting("Match not found","");return;}
+  const isKO=m.st!=="GROUP",known=m.a&&m.b;
+  let h='<div class="backlink" data-route="matches">← Back to matches</div>';
+  h+='<div class="section-h"><h2>'+stageChip(m)+'</h2>'+statusChip(m)+'</div>';
+  h+='<div class="grid cards-2">';
+  // overview
+  h+='<div class="panel pitch"><div class="lab small muted" style="font-weight:800;letter-spacing:1px">MATCH OVERVIEW</div>';
+  h+='<div class="teamrow" style="margin-top:12px"><div class="side">'+teamBadge(m.a,{map:true,mapSize:34,group:!!m.a,fallback:m.af})+'</div><span class="score">'+(m.sc?m.sc[0]:"–")+'</span></div>';
+  if(m.pens)h+='<div class="pens" style="text-align:right">penalties '+m.pens[0]+'–'+m.pens[1]+'</div>';
+  h+='<div class="teamrow"><div class="side">'+teamBadge(m.b,{map:true,mapSize:34,group:!!m.b,fallback:m.bf})+'</div><span class="score">'+(m.sc?m.sc[1]:"–")+'</span></div>';
+  if(m.note)h+='<div class="small muted" style="margin-top:6px">↳ '+esc(m.note)+'</div>';
+  h+='<div class="kv"><span class="k">Stage</span><span>'+STAGE_LABEL[m.st]+(m.num?" · #"+m.num:"")+'</span></div>';
+  h+='<div class="kv"><span class="k">Kick-off (Qatar)</span><span class="qatar">'+(m.koUTC?qatarFull(m.koUTC):niceDate(m.date)+" · TBC")+'</span></div>';
+  if(m.ven&&m.koUTC)h+='<div class="kv"><span class="k">Venue local time</span><span>'+venueLocal(m.koUTC,VEN[m.ven].off)+'</span></div>';
+  h+='<div class="kv"><span class="k">Venue</span><span>'+(m.ven?esc(VEN[m.ven].fifa+" · "+VEN[m.ven].name):"TBC")+'</span></div>';
+  h+='<div class="kv"><span class="k">Host city</span><span>'+(m.ven?esc(VEN[m.ven].city+", "+VEN[m.ven].country):"TBC")+'</span></div>';
+  if(m.ven)h+='<div class="kv"><span class="k">Capacity</span><span>'+VEN[m.ven].cap.toLocaleString()+'</span></div>';
+  h+=srcBar(m.src)+'</div>';
+  // probability
+  h+='<div class="panel"><div class="lab small muted" style="font-weight:800;letter-spacing:1px">WIN / ADVANCE PROBABILITY <span class="est-tag">MODEL ESTIMATE</span></div>';
+  if(known){const e=estimate(m.a,m.b,isKO);const cf=confidenceLabel();
+    h+='<div style="margin-top:12px">'+probMini(m)+'</div>';
+    h+='<div class="kv"><span class="k">Confidence</span><span class="'+cf.cls+'">'+cf.txt+'</span></div>';
+    if(e.note)h+='<div class="disclaimer">'+esc(e.note)+'</div>';
+    h+='<button class="why-btn" data-action="why">▸ Why this probability?</button>';
+    h+='<div id="whybox" class="hidden" style="margin-top:10px">'+factorBreakdown(m.a,m.b)+'</div>';
+  }else{h+=awaiting("Prediction pending teams","Once the feeder ties resolve, the model estimates advance probabilities for this fixture.");}
+  h+='</div></div>';
+  // live-only
+  h+='<div class="section-h"><h2><span class="ic">📋</span>Line-ups &amp; formations</h2></div>';
+  h+=awaiting("Live feed unavailable — not available yet","Confirmed line-ups, formations and the starting XI publish ~60 min before kick-off. Connect a licensed provider (Sportradar, Opta/Stats Perform, API-Football, Sportmonks) to populate — nothing is fabricated in the snapshot.");
+  h+='<div class="section-h"><h2><span class="ic">📈</span>Live match statistics</h2></div><div class="grid cards-2">';
+  h+=awaiting("Team comparison — live feed unavailable","Possession, shots, shots on target, corners, fouls and xG require a live feed.");
+  h+=awaiting("Live event timeline — live feed unavailable","Goals, cards, substitutions and VAR incidents stream here (auto-refresh 30–60s) when a provider is connected.");
+  h+='</div>';
+  // players to watch
+  h+='<div class="section-h"><h2><span class="ic">⭐</span>Important players to watch</h2></div><div class="grid cards-2">'+watchPanel(m.a)+watchPanel(m.b)+'</div>';
+  // form
+  h+='<div class="section-h"><h2><span class="ic">🔁</span>Recent form &amp; head-to-head</h2></div><div class="grid cards-3">'+formPanel(m.a)+formPanel(m.b)+awaiting("H2H &amp; injury notes — not available yet","Historical head-to-head and squad-availability need a connected stats/news source. WC-2026 form (left) is verified.")+'</div>';
+  h+='<div class="section-h"><h2><span class="ic">🔗</span>Full source list</h2></div><div class="panel">'+srcBar(m.src.concat(["fifaVen","model"]))+'<div class="disclaimer">Every figure is a verified result (cited), a labelled model estimate, or an explicit “not available yet”. Nothing is fabricated.</div></div>';
+  view.innerHTML=h;
+}
+function factorBreakdown(a,b){const sa=factorScores(a),sb=factorScores(b);let h='';
+  FACTORS_UI().forEach(f=>{const va=sa[f.key],vb=sb[f.key],tot=va+vb||1,pa=Math.round(va/tot*100);
+    h+='<div class="factor"><div class="fh"><span>'+f.label+' <span class="pill '+(f.connected?"on":"est")+'">'+(f.connected?"verified":"model input")+'</span> <span class="muted">'+Math.round(f.w*100)+'%</span></span><span class="muted">'+esc(teamName(a))+' '+pa+'% · '+(100-pa)+'% '+esc(teamName(b))+'</span></div>'
+      +'<div class="ft"><div class="ff" style="width:'+pa+'%;background:var(--teal)"></div></div>'
+      +'<div class="small faint" style="margin-top:3px">'+esc(f.desc)+'</div></div>';});
+  h+='<div class="disclaimer">Weighted blend: WC-2026 performance 35% (verified results) · recent form 25% · World-Cup history 15% · team strength 15% · player availability 10%. History &amp; strength use disclosed public inputs; connect live feeds to refine. Output is a <b>model estimate</b>, not an official FIFA prediction.</div>';
+  return h;}
+function FACTORS_UI(){return [
+  {key:"wc",label:"WC 2026 performance",w:.35,connected:true,desc:"Round reached, knockout wins & goal difference (verified results)."},
+  {key:"form",label:"Recent competitive form",w:.25,connected:false,desc:"Tournament momentum + baseline strength (model estimate)."},
+  {key:"hist",label:"Historical World Cup record",w:.15,connected:false,desc:"Public World Cup pedigree (titles, deep runs)."},
+  {key:"tier",label:"Team strength (ranking/Elo tier)",w:.15,connected:false,desc:"Pre-tournament strength tier — disclosed model input."},
+  {key:"avail",label:"Player availability & star impact",w:.10,connected:false,desc:"Marquee-player impact from cited coverage; connect squad news to refine."}];}
+
+/* ---- players to watch (cited names only; counts 'not available yet') ---- */
+const WATCH = {
+  ARG:[{n:"Lionel Messi",pos:"Forward",role:"Talisman / creator",note:"Leads the adidas Golden Boot race at WC 2026.",src:"fifaHome",conf:"High"}],
+  BRA:[{n:"Vinícius Júnior",pos:"Forward",role:"Left-wing threat",note:"Starred as Brazil topped Group C.",src:"fifaHome",conf:"High"},
+       {n:"Matheus Cunha",pos:"Forward",role:"Mobile striker",note:"Featured in FIFA's WC 2026 highlight moments.",src:"fifaHome",conf:"Medium"}],
+  NOR:[{n:"Erling Haaland",pos:"Forward",role:"Focal striker",note:"Key to Norway's knockout run.",src:"espn",conf:"High"}],
+  FRA:[{n:"Kylian Mbappé",pos:"Forward",role:"Match-winner",note:"Central to France's 3-0 R32 win over Sweden.",src:"espn",conf:"High"}],
+  ENG:[{n:"Harry Kane",pos:"Forward",role:"Captain / finisher",note:"Delivered for England at a vital moment (ESPN).",src:"espn",conf:"High"}],
+  USA:[{n:"Malik Tillman",pos:"Midfielder",role:"Creative engine",note:"“Having a great World Cup” — shone in R32 (ESPN).",src:"espn",conf:"High"},
+       {n:"Folarin Balogun",pos:"Forward",role:"Striker",note:"Availability watch — controversial red card in group play (ESPN).",src:"espn",conf:"Medium"}],
+  MAR:[{n:"Ismael Saibari",pos:"Midfielder",role:"Box-to-box",note:"Named in FIFA's WC 2026 moments.",src:"fifaHome",conf:"Medium"},
+       {n:"Gessime Yassine",pos:"Forward",role:"Wide threat",note:"Featured in FIFA's WC 2026 moments.",src:"fifaHome",conf:"Medium"}],
+  CAN:[{n:"Promise David",pos:"Forward",role:"Target man",note:"Featured in FIFA's WC 2026 moments.",src:"fifaHome",conf:"Medium"}],
+  SUI:[{n:"Rubén Vargas",pos:"Forward",role:"Wide creator",note:"Featured in FIFA's WC 2026 moments.",src:"fifaHome",conf:"Medium"}],
+  BIH:[{n:"Kerim Alajbegović",pos:"Forward",role:"Emerging talent",note:"Named in FIFA's WC 2026 moments.",src:"fifaHome",conf:"Low"}]
+};
+function watchPanel(code){
+  if(!code)return awaiting("Players to watch — TBC","Team not yet confirmed for this tie.");
+  const list=WATCH[code];
+  let h='<div class="panel"><div class="lab small muted" style="font-weight:800;letter-spacing:1px">'+teamBadge(code,{map:false})+'</div>';
+  if(list&&list.length){list.forEach(p=>{const cc=p.conf==="High"?"conf-h":p.conf==="Medium"?"conf-m":"conf-l";
+    h+='<div style="margin-top:12px;border-top:1px solid var(--line);padding-top:10px"><div class="playerrow">'+avatar(p.n,code,44)
+      +'<div style="min-width:0"><b>'+esc(p.n)+'</b> <span class="'+cc+'">'+p.conf+'</span><div class="small muted">'+esc(p.pos)+' · '+esc(p.role)+'</div></div></div>'
+      +'<div class="small muted" style="margin-top:5px">'+esc(p.note)+'</div>'
+      +'<div class="small faint" style="margin-top:3px">Goals/assists: not available yet (per-player stats feed required)</div>'+srcBar([p.src])+'</div>';});}
+  else{h+='<div style="margin-top:10px">'+awaiting("Not available yet","Per-player goals, assists & form for this squad need a connected stats feed — not fabricated.")+'</div>';}
+  h+='</div>';return h;}
+function formPanel(code){if(!code)return "";const ko=koResultsFor(code);
+  let h='<div class="panel"><div class="lab small muted" style="font-weight:800;letter-spacing:1px">'+teamBadge(code,{map:true,mapSize:22})+'</div>';
+  h+='<div class="kv"><span class="k">Status</span><span>'+reachedLabel(code)+'</span></div>';
+  if(ko.length)h+='<div class="chip-row" style="margin-top:8px">'+ko.map(r=>'<span class="wchip">'+(r.win?"✓ W":"✗ L")+' v '+esc(teamName(r.opp))+' ('+(r.gd>=0?"+":"")+r.gd+')</span>').join("")+'</div>';
+  else h+='<div class="small muted" style="margin-top:8px">No knockout matches recorded yet.</div>';
+  h+=srcBar(["espn"])+'</div>';return h;}
+function reachedLabel(code){return statusMeta(code)[0];}
+
+/* ---------------------- BRACKET ------------------------------------------- */
+function bracketLegend(){return '<div class="legend"><span><span class="swatch g"></span>Confirmed / qualified</span><span><span class="swatch b"></span>Predicted</span><span><span class="swatch e"></span>Eliminated</span><span><span class="swatch p"></span>Pending</span><span><span class="swatch au"></span>Champion favourite &amp; path</span></div>';}
+function bracketRow(m,side,favCode){const c=side==="a"?m.a:m.b;const sc=m.sc?(side==="a"?m.sc[0]:m.sc[1]):null,other=m.sc?(side==="a"?m.sc[1]:m.sc[0]):null;
+  let win=false;if(m.sc){win=sc>other;if(m.pens){const pa=side==="a"?m.pens[0]:m.pens[1],pb=side==="a"?m.pens[1]:m.pens[0];win=pa>pb;}}
+  const elim=c&&T[c]&&(T[c].r==="R32"||T[c].r==="GROUP")&&m.status==="FT"&&!win;
+  const isFav=c&&c===favCode;
+  const qcls=c&&T[c]&&(T[c].r==="R16")?"qual green":(isFav?"qual gold":"");
+  let inner=c?'<span class="'+qcls+'">'+teamBadge(c,{map:false,fw:22,fh:15})+'</span>':'<span class="tbadge"><span class="flag ph" style="width:22px;height:15px"></span><span class="tn faint">'+esc(side==="a"?m.af:m.bf)+'</span></span>';
+  return '<div class="bt '+(elim?"elim":"")+'">'+inner+(sc!=null?'<span class="sc">'+sc+(m.pens?" ("+(side==="a"?m.pens[0]:m.pens[1])+"p)":"")+'</span>':"")+'</div>';}
+function bracketNode(m,favCode){const cls=[];if(m.status==="FT")cls.push("confirmed");else if(!(m.a&&m.b))cls.push("pending");
+  if((m.a&&m.a===favCode)||(m.b&&m.b===favCode))cls.push("champ");
+  const v=m.ven?VEN[m.ven].city:"TBC";
+  return '<div class="bnode '+cls.join(" ")+'">'+bracketRow(m,"a",favCode)+bracketRow(m,"b",favCode)
+    +'<div class="bmeta"><span>'+(m.num?"#"+m.num+" · ":"")+(m.koUTC?qatarShort(m.koUTC)+" QT":niceDate(m.date).slice(0,-6))+'</span><span>'+esc(v)+'</span></div></div>';}
+function bracketMarkup(favCode){let h='<div class="bracket">';
+  [["R32","Round of 32"],["R16","Round of 16"],["QF","Quarter-finals"],["SF","Semi-finals"],["FINAL","Final"]].forEach(pair=>{
+    h+='<div class="bcol"><h4>'+pair[1]+'</h4>';
+    M.filter(m=>m.st===pair[0]).forEach(m=>{h+=bracketNode(m,favCode);});
+    if(pair[0]==="FINAL"){const tp=M.find(x=>x.st==="3RD");if(tp)h+='<h4 style="margin-top:12px">Third place</h4>'+bracketNode(tp,favCode);}
+    h+='</div>';});
+  return h+'</div>';}
+function renderBracket(){const fav=favorite();
+  let h='<div class="section-h"><h2><span class="ic">🗺️</span>Knockout bracket</h2><span class="small muted">Round of 32 → Final · Qatar time</span></div>';
+  h+='<div class="panel pitch">'+bracketLegend()+'<div class="swipehint">⇠ swipe the bracket ⇢</div>'+bracketMarkup(fav?fav.c:null)+'</div>';
+  h+='<div class="disclaimer">Round-of-32 results and Round-of-16 / quarter-final matchups are confirmed &amp; sourced (FIFA, ESPN). Semi-final onward show expected slots; teams populate as ties resolve. Gold marks the model champion favourite ('+(fav?esc(teamName(fav.c))+" · "+Math.round(fav.w*100)+"% est.":"—")+') and its path. Kick-off times from the semi-finals are TBC until FIFA confirms.</div>';
+  h+='<div class="panel">'+srcBar(["fifaHome","espn","fifaFix","model"])+'</div>';
+  view.innerHTML=h;}
+
+/* ---------------------- PREDICTIONS (model + champion table) -------------- */
+function renderPredictions(){
+  let h='<div class="section-h"><h2><span class="ic">📈</span>Win probability model</h2><span class="est-tag">TRANSPARENT · ESTIMATE ONLY</span></div>';
+  h+='<div class="panel"><b>How it works.</b> Each team gets a 0–100 performance index from five weighted factors; a logistic function turns the gap between two teams into win / advance probabilities. Champion odds come from a '+(14)+'k-run Monte-Carlo simulation of the confirmed bracket.</div>';
+  h+='<div class="grid cards-2" style="margin-top:14px"><div class="panel">';
+  FACTORS_UI().forEach(f=>{h+='<div class="factor"><div class="fh"><span>'+f.label+' <span class="pill '+(f.connected?"on":"est")+'">'+(f.connected?"verified":"model input")+'</span></span><span class="muted">'+Math.round(f.w*100)+'%</span></div><div class="ft"><div class="ff" style="width:'+Math.round(f.w*100)+'%;background:'+(f.connected?"var(--teal)":"var(--purple)")+'"></div></div><div class="small faint" style="margin-top:3px">'+esc(f.desc)+'</div></div>';});
+  h+='</div><div class="panel"><div class="lab small muted" style="font-weight:800;letter-spacing:1px">MODEL STATUS</div>'
+    +'<div class="kv"><span class="k">Factors</span><span>5 blended · 1 fully verified</span></div>'
+    +'<div class="kv"><span class="k">Champion method</span><span>Monte-Carlo · 14,000 runs</span></div>'
+    +'<div class="kv"><span class="k">Extra-time / penalties</span><span>Included in advance %</span></div>'
+    +'<div class="kv"><span class="k">Confidence</span><span class="conf-m">Medium — model estimate</span></div>'
+    +'<div class="kv"><span class="k">Output type</span><span>Estimate — not official FIFA</span></div>'
+    +'<div class="disclaimer">History &amp; strength factors use disclosed public inputs (World-Cup pedigree, pre-tournament rating tier). Connect live form / ranking / injury feeds via the provider layer to sharpen them.</div></div></div>';
+
+  // champion probability table
+  h+='<div class="section-h"><h2><span class="ic">🏆</span>Champion probability <span class="est-tag">MODEL ESTIMATE</span></h2></div>';
+  h+='<div class="panel">'+championChart(championRows().slice(0,12))+'</div>';
+  h+='<div class="swipehint">⇠ swipe the table ⇢</div>';
+  h+='<div class="tablewrap" style="margin-top:6px"><table><thead><tr><th class="num">#</th><th>Team</th><th>Map</th><th>Stage</th><th class="num">Next rd</th><th class="num">Semi</th><th class="num">Final</th><th class="num">Win</th><th>Conf</th><th>Trend</th><th>Main reason</th></tr></thead><tbody>';
+  championRows().forEach((row,i)=>{const stage=currentStageLabel(row.c);
+    const pNext=nextRoundProb(row);const tr=trendFor(row.c);
+    h+='<tr data-team="'+row.c+'" style="cursor:pointer"><td class="rankcell">'+(i+1)+'</td>'
+      +'<td>'+teamBadge(row.c,{fw:26,fh:18,group:true})+'</td>'
+      +'<td>'+globe(row.c,26)+'</td>'
+      +'<td>'+stage+'</td>'
+      +'<td class="num">'+pctCell(pNext)+'</td><td class="num">'+pctCell(row.sf)+'</td><td class="num">'+pctCell(row.f)+'</td>'
+      +'<td class="num"><b style="color:var(--gold)">'+pctCell(row.w)+'</b></td>'
+      +'<td><span class="conf-m">Med</span></td>'
+      +'<td class="'+tr.cls+'">'+tr.t+'</td><td class="small muted">'+esc(championReason(row.c))+'</td></tr>';});
+  h+='</tbody></table></div>';
+  h+='<div class="disclaimer">Columns show P(reach next round) · P(reach semi-final) · P(reach final) · P(win) — from the Monte-Carlo bracket simulation. Last updated '+esc(SNAPSHOT_AT)+'. Sources: FIFA (teams, results), ESPN (bracket), planner model (probabilities). Estimates only — not official FIFA predictions.</div>';
+
+  // per-match odds
+  h+='<div class="section-h"><h2><span class="ic">⚔️</span>Upcoming ties — match odds</h2></div><div class="grid cards-2">';
+  M.filter(m=>(m.status==="SCHED"||m.status==="TODAY")&&m.a&&m.b).forEach(m=>{const e=estimate(m.a,m.b,true);
+    h+='<div class="panel"><div style="display:flex;justify-content:space-between;align-items:center"><b>'+esc(teamName(m.a))+' v '+esc(teamName(m.b))+'</b><span class="small muted">'+STAGE_LABEL[m.st]+'</span></div><div style="margin-top:10px">'+probMini(m)+'</div><div class="small muted" style="margin-top:6px">'+esc(e.note)+'</div></div>';});
+  h+='</div>';
+  view.innerHTML=h;}
+function pctCell(p){return Math.round(p*100)+"%";}
+function championChart(list){const max=list.length?Math.max.apply(null,list.map(o=>o.w)):1;
+  return '<div style="margin-top:8px">'+list.map((o,i)=>{const pct=Math.round(o.w*100),w=Math.round(o.w/(max||1)*100);
+    return '<div class="barrow"><span>'+teamBadge(o.c,{fw:22,fh:15})+'</span><div class="bartrack"><div class="barfill '+(i===0?"gold":"")+'" style="width:'+w+'%"></div></div><span class="muted">'+pct+'%</span></div>';}).join("")+'</div>';}
+
+/* ---------------------- LEADERBOARD (Golden Boot) ------------------------- */
+function renderLeaderboard(){
+  let h='<div class="section-h"><h2><span class="ic">👟</span>Golden Boot leaderboard</h2></div>';
+  h+='<div class="grid cards-2">';
+  h+='<div class="panel kpi goldg"><div class="lab">👟 GOLDEN BOOT LEADER</div><div class="val playerrow" style="margin-top:10px">'+avatar("Lionel Messi","ARG",56)+'<span>Lionel Messi</span></div><div class="sub">Argentina · leads the adidas Golden Boot race (FIFA) · confidence: High</div><div class="big-emoji">🥇</div></div>';
+  h+='<div class="panel"><div class="lab small muted" style="font-weight:800;letter-spacing:1px">SORT ORDER</div><div class="small muted" style="margin-top:10px">1 · Goals → 2 · Assists → 3 · Fewer minutes → 4 · Team still active</div>'+srcBar(["fifaHome"])+'</div></div>';
+  h+='<div class="section-h"><h2><span class="ic">🎯</span>Golden Boot watchlist</h2></div>';
+  const watch=[{c:"ARG",n:"Lionel Messi",note:"Leads the race (FIFA)",cf:"High"},{c:"BRA",n:"Vinícius Júnior",note:"Brazil topped Group C",cf:"High"},{c:"NOR",n:"Erling Haaland",note:"Norway KO run",cf:"High"},{c:"FRA",n:"Kylian Mbappé",note:"3-0 R32 vs Sweden",cf:"High"},{c:"ENG",n:"Harry Kane",note:"Delivered for England",cf:"High"},{c:"BRA",n:"Matheus Cunha",note:"FIFA moments",cf:"Medium"}];
+  h+='<div class="grid cards-3">'+watch.map(w=>{const cc=w.cf==="High"?"conf-h":"conf-m";
+    return '<div class="panel"><div class="playerrow">'+avatar(w.n,w.c,46)+'<div><b>'+esc(w.n)+'</b> <span class="'+cc+'">'+w.cf+'</span><div class="small muted">'+esc(teamName(w.c))+'</div></div></div><div class="small muted" style="margin-top:8px">'+esc(w.note)+'</div><div class="small faint" style="margin-top:3px">Goals: not available yet</div>'+srcBar([w.c==="ENG"||w.c==="NOR"||w.c==="FRA"?"espn":"fifaHome"])+'</div>';}).join("")+'</div>';
+  h+='<div class="section-h"><h2><span class="ic">📊</span>Top scorers table</h2></div>';
+  h+=awaiting("Exact goal tallies — not available yet","FIFA confirms Messi leads the adidas Golden Boot race, but verified per-player goal / assist / minutes numbers are not published in the current snapshot. Rather than fabricate a table, the counts stay “not available yet” until a licensed player-stats feed (FIFA official stats, Opta/Stats Perform) is connected. The structure below is ready to populate.");
+  h+='<div class="tablewrap" style="margin-top:12px"><table><thead><tr><th class="num">#</th><th>Player</th><th>Team</th><th>Pos</th><th class="num">Goals</th><th class="num">Assists</th><th class="num">MP</th><th class="num">Min</th><th class="num">G/90</th><th>Team status</th><th>Source</th></tr></thead><tbody>';
+  h+='<tr><td class="rankcell">1</td><td><span class="playerrow">'+avatar("Lionel Messi","ARG",30)+' Lionel Messi</span></td><td>'+teamBadge("ARG",{fw:20,fh:13,name:false})+' Argentina</td><td>FW</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td><span class="status-tag tag-today">R32 today</span></td><td>'+esc(SRC.fifaHome.name.split("—")[0].trim())+'</td></tr>';
+  h+='<tr><td class="num" colspan="11" style="text-align:center;color:var(--faint)">Connect a player-stats feed to populate ranks 2–20 (goals · assists · minutes · G/90) and the top-10 bar chart + player detail drawer.</td></tr>';
+  h+='</tbody></table></div>';
+  view.innerHTML=h;}
+
+/* ---------------------- PLAYERS TO WATCH ---------------------------------- */
+function renderWatch(){
+  let h='<div class="section-h"><h2><span class="ic">⭐</span>Important players to watch</h2><span class="small muted">Upcoming ties · 2–4 per team where available</span></div>';
+  M.filter(m=>(m.status==="SCHED"||m.status==="TODAY")&&(m.a||m.b)).slice(0,10).forEach(m=>{
+    h+='<div class="section-h" style="margin:16px 0 8px"><h2 style="font-size:14px">'+esc(feederLabel(m,"a"))+' v '+esc(feederLabel(m,"b"))+' <span class="small muted">· '+STAGE_LABEL[m.st]+' · '+(m.koUTC?qatarShort(m.koUTC)+" QT":niceDate(m.date))+'</span></h2></div><div class="grid cards-2">'+watchPanel(m.a)+watchPanel(m.b)+'</div>';});
+  h+='<div class="disclaimer" style="margin-top:14px">Named players are drawn from verified FIFA / ESPN coverage (Golden Boot race, group round-ups, knockout reports) with confidence labels. Full 2–4-per-team lists with WC-2026 goals, assists, previous-World-Cup record and injury status populate when a licensed stats feed is connected — no player output is fabricated.</div>';
+  view.innerHTML=h;}
+
+/* ---------------------- TEAMS --------------------------------------------- */
+function renderTeams(){
+  let h='<div class="section-h"><h2><span class="ic">🌍</span>Teams</h2><span class="small muted">48 teams · 12 groups</span></div>';
+  const groups={};Object.keys(T).forEach(c=>{(groups[T[c].g]=groups[T[c].g]||[]).push(c);});
+  Object.keys(groups).sort().forEach(g=>{
+    h+='<div class="section-h" style="margin:16px 0 8px"><h2 style="font-size:14px">Group '+g+'</h2></div><div class="teamgrid">'+groups[g].map(c=>{
+      const sm=statusMeta(c);
+      return '<div class="teamcard" data-team="'+c+'"><div style="display:flex;align-items:center;gap:8px">'+globe(c,30)+flagChip(c,26,18)+'<b class="tc">'+c+'</b></div><div style="font-weight:700;margin:7px 0 6px">'+esc(teamName(c))+'</div><span class="status-tag '+sm[1]+'">'+sm[2]+'</span></div>';}).join("")+'</div>';});
+  h+='<div class="panel" style="margin-top:16px">'+srcBar(["fifaGrp","espn"])+'</div>';
+  view.innerHTML=h;}
+function renderTeam(code){if(!T[code]){view.innerHTML=awaiting("Team not found","");return;}
+  const t=T[code],ko=koResultsFor(code),sim=championSim()[code];
+  const teamMatches=M.filter(m=>m.a===code||m.b===code).sort((x,y)=>STAGE_ORDER.indexOf(x.st)-STAGE_ORDER.indexOf(y.st));
+  let h='<div class="backlink" data-route="teams">← Back to teams</div>';
+  h+='<div class="section-h"><h2>'+teamBadge(code,{map:true,mapSize:34,group:true})+'</h2><span class="status-tag '+statusMeta(code)[1]+'">'+reachedLabel(code)+'</span></div>';
+  h+='<div class="grid cards-2"><div class="panel pitch"><div class="lab small muted" style="font-weight:800;letter-spacing:1px">PROFILE</div>';
+  h+='<div class="kv"><span class="k">Group</span><span>Group '+t.g+'</span></div><div class="kv"><span class="k">Status</span><span>'+reachedLabel(code)+'</span></div>';
+  if(sim){h+='<div class="kv"><span class="k">Reach final (est.)</span><span>'+Math.round(sim.f*100)+'%</span></div><div class="kv"><span class="k">Win tournament (est.)</span><span style="color:var(--gold);font-weight:800">'+Math.round(sim.w*100)+'%</span></div>';}
+  h+='<div class="kv"><span class="k">Performance index</span><span>'+Math.round(strength(code))+' <span class="muted small">(model)</span></span></div>';
+  h+='<div class="kv"><span class="k">Main reason</span><span class="small">'+esc(championReason(code))+'</span></div>';
+  h+=srcBar(["fifaGrp","espn","model"])+'</div>';
+  h+='<div class="panel"><div class="lab small muted" style="font-weight:800;letter-spacing:1px">KNOCKOUT FORM (VERIFIED)</div>';
+  if(ko.length)h+='<div class="chip-row" style="margin-top:10px">'+ko.map(r=>'<span class="wchip">'+(r.win?"✓ W":"✗ L")+' v '+esc(teamName(r.opp))+' ('+(r.gd>=0?"+":"")+r.gd+')</span>').join("")+'</div>';
+  else h+='<div class="small muted" style="margin-top:10px">No knockout matches recorded yet.</div>';
+  h+='<div style="margin-top:12px">'+factorMini(code)+'</div>';
+  h+='<div class="disclaimer">Goals for/against totals, strengths/risks &amp; win-probability trend detail need a connected stats feed — not fabricated. Factor bars use the disclosed model inputs.</div></div></div>';
+  h+='<div class="section-h"><h2><span class="ic">⚽</span>Matches</h2></div><div class="grid cards-3">'+teamMatches.map(matchCard).join("")+'</div>';
+  view.innerHTML=h;}
+function factorMini(code){const s=factorScores(code);return FACTORS_UI().map(f=>{const v=Math.round(s[f.key]);
+  return '<div class="factor"><div class="fh"><span>'+f.label+'</span><span class="muted">'+v+'/100</span></div><div class="ft"><div class="ff" style="width:'+v+'%;background:'+(f.connected?"var(--teal)":"var(--purple)")+'"></div></div></div>';}).join("");}
+
+/* ============================================================================
+   FEED + REFRESH + FOOTER
+   ========================================================================== */
+let autoTimer=null;
+function updateFeedUI(){Registry.resolve();const health=Registry.feedHealth();
+  $("#feedDot").className="dot "+health;
+  $("#feedText").textContent={live:"Live feed",delayed:"Delayed",failed:"Feed failed",manual:"Manual · Snapshot"}[health];
+  $("#feedPill").title="Active provider: "+Registry.active.name;}
+function doRefresh(){const now=new Date();$("#refreshMeta").textContent="Last refreshed "+pad((now.getUTCHours()+3)%24)+":"+pad(now.getUTCMinutes())+" QT";updateFeedUI();manageAuto();}
+function manageAuto(){const anyLive=M.some(m=>m.status==="LIVE");
+  if(anyLive&&Registry.active.health()==="live"){if(!autoTimer)autoTimer=setInterval(doRefresh,45000);}else if(autoTimer){clearInterval(autoTimer);autoTimer=null;}}
+/* ---- WhatsApp / native share ---- */
+function shareText(){
+  const up=upcoming()[0],todays=M.filter(isToday).length,fav=favorite();
+  const L=["🏆 *FIFA World Cup 2026* — all times in Qatar time (UTC+3)"];
+  if(up)L.push("⏱️ Next: "+feederLabel(up,"a")+" v "+feederLabel(up,"b")+(up.koUTC?(" · "+qatarShort(up.koUTC)+" QT"):""));
+  L.push("🔥 Today: "+todays+" match"+(todays===1?"":"es")+" (Qatar time)");
+  L.push("🥇 Golden Boot: L. Messi leads the race (FIFA)");
+  if(fav)L.push("📈 Model pick: "+teamName(fav.c)+" ~"+Math.round(fav.w*100)+"% to win (model estimate)");
+  L.push("📊 Sources: FIFA + ESPN · 3 Jul 2026");
+  if(/^https?:/.test(location.href))L.push(location.href);
+  return L.join("\n");
+}
+async function doShare(){
+  const text=shareText(),url=/^https?:/.test(location.href)?location.href:undefined;
+  if(navigator.share){ try{ await navigator.share({title:"FIFA World Cup 2026",text,url}); return; }catch(e){ if(e&&e.name==="AbortError")return; } }
+  window.open("https://wa.me/?text="+encodeURIComponent(text),"_blank","noopener");
+}
+function renderFooter(){const srcs=Object.keys(SRC).map(k=>srcChip(k)).join(" ");
+  $("#footer").innerHTML='<div class="autobadge"><span class="lb"></span>🔄 Auto-updates via GitHub Actions + football-data.org<span class="ts">· last refreshed '+esc(SNAPSHOT_AT)+' (UTC)</span></div>'
+    +'<div class="section-h"><h2 style="font-size:14px"><span class="ic">🔒</span>Data sources &amp; integrity</h2></div><div class="chip-row">'+srcs+'</div>'
+    +'<p style="margin-top:12px;max-width:860px">This planner shows a <b>verified snapshot</b> from official FIFA and reputable coverage (ESPN), 3 July 2026 — every fixture, result, venue and team status cited above with a timestamp. '
+    +'Win &amp; champion probabilities are computed by a transparent 5-factor model and clearly labelled <b>model estimates</b>, not official FIFA predictions. Live match data (line-ups, xG, possession, cards, subs, VAR, per-player stats) and exact goal tallies show <b>“not available yet / live feed unavailable”</b> until a licensed provider is connected. '
+    +'A provider abstraction layer supports Sportradar, Opta / Stats Perform, API-Football and Sportmonks — no site is scraped against its terms. Country locators use real geographic coordinates.</p>'
+    +'<p class="faint small" style="margin-top:8px">All times in Qatar time (Asia/Qatar, UTC+03:00). Snapshot compiled '+esc(SNAPSHOT_AT)+'.</p>';}
+
+/* ============================================================================
+   EVENTS + BOOT
+   ========================================================================== */
+document.addEventListener("click",e=>{
+  const why=e.target.closest('[data-action="why"]');
+  if(why){const box=$("#whybox");if(box){box.classList.toggle("hidden");why.textContent=(box.classList.contains("hidden")?"▸":"▾")+" Why this probability?";}return;}
+  const tm=e.target.closest("[data-team]");if(tm){go("team",tm.getAttribute("data-team"));return;}
+  const mid=e.target.closest("[data-mid]");if(mid){go("match",mid.getAttribute("data-mid"));return;}
+  const nav=e.target.closest("[data-route]");if(nav){go(nav.getAttribute("data-route"));e.preventDefault();return;}
+});
+$("#refreshBtn").addEventListener("click",doRefresh);
+$("#shareBtn").addEventListener("click",doShare);
+var _fab=$("#fabShare");if(_fab)_fab.addEventListener("click",doShare);
+window.addEventListener("hashchange",()=>{render();window.scrollTo(0,0);});
+championSim();updateFeedUI();doRefresh();renderFooter();render();
+</script>
+</body>
+</html>
