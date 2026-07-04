@@ -345,7 +345,7 @@ footer{border-top:1px solid var(--line);margin-top:34px;padding:22px 0 44px;colo
 
 <!-- AUTOMATION HOOK: the GitHub Actions build writes the latest results here.
      Leave the tag in place. Empty = the dashboard uses its built-in snapshot. -->
-<script id="wc-data" type="application/json">{"results":[{"id":"r32a","a":"CAN","b":"RSA","status":"FT","sc":[1,0],"koUTC":"2026-06-28T19:00Z","src":["footballdata"]},{"id":"r32b","a":"BRA","b":"JPN","status":"FT","sc":[2,1],"koUTC":"2026-06-29T17:00Z","src":["footballdata"]},{"id":"r32c","a":"GER","b":"PAR","status":"FT","sc":[4,5],"pens":[3,4],"koUTC":"2026-06-29T20:30Z","src":["footballdata"]},{"id":"r32d","a":"NED","b":"MAR","status":"FT","sc":[3,4],"pens":[2,3],"koUTC":"2026-06-30T01:00Z","src":["footballdata"]},{"id":"r32e","a":"CIV","b":"NOR","status":"FT","sc":[1,2],"koUTC":"2026-06-30T17:00Z","src":["footballdata"]},{"id":"r32f","a":"FRA","b":"SWE","status":"FT","sc":[3,0],"koUTC":"2026-06-30T21:00Z","src":["footballdata"]},{"id":"r32g","a":"MEX","b":"ECU","status":"FT","sc":[2,0],"koUTC":"2026-07-01T02:00Z","src":["footballdata"]},{"id":"r32h","a":"ENG","b":"COD","status":"FT","sc":[2,1],"koUTC":"2026-07-01T16:00Z","src":["footballdata"]},{"id":"r32i","a":"BEL","b":"SEN","status":"FT","sc":[3,2],"koUTC":"2026-07-01T20:00Z","src":["footballdata"]},{"id":"r32j","a":"USA","b":"BIH","status":"FT","sc":[2,0],"koUTC":"2026-07-02T00:00Z","src":["footballdata"]},{"id":"r32k","a":"ESP","b":"AUT","status":"FT","sc":[3,0],"koUTC":"2026-07-02T19:00Z","src":["footballdata"]},{"id":"r32l","a":"POR","b":"CRO","status":"FT","sc":[2,1],"koUTC":"2026-07-02T23:00Z","src":["footballdata"]},{"id":"r32m","a":"SUI","b":"ALG","status":"FT","sc":[2,0],"koUTC":"2026-07-03T03:00Z","src":["footballdata"]},{"id":"r32n","a":"AUS","b":"EGY","status":"FT","sc":[3,5],"pens":[2,4],"koUTC":"2026-07-03T18:00Z","src":["footballdata"]},{"id":"r32o","a":"ARG","b":"CPV","status":"FT","sc":[3,2],"koUTC":"2026-07-03T22:00Z","src":["footballdata"]},{"id":"r32p","a":"COL","b":"GHA","status":"FT","sc":[1,0],"koUTC":"2026-07-04T01:30Z","src":["footballdata"]},{"id":"r16_89","a":"PAR","b":"FRA","koUTC":"2026-07-04T21:00Z"},{"id":"r16_90","a":"CAN","b":"MAR","koUTC":"2026-07-04T17:00Z"},{"id":"r16_91","a":"BRA","b":"NOR","koUTC":"2026-07-05T20:00Z"},{"id":"r16_92","a":"MEX","b":"ENG","koUTC":"2026-07-06T00:00Z"},{"id":"r16_93","a":"POR","b":"ESP","koUTC":"2026-07-06T19:00Z"},{"id":"r16_94","a":"USA","b":"BEL","koUTC":"2026-07-07T00:00Z"},{"id":"r16_95","a":"ARG","b":"EGY","koUTC":"2026-07-07T16:00Z"},{"id":"r16_96","a":"SUI","b":"COL","koUTC":"2026-07-07T20:00Z"}],"updatedAt":"2026-07-04T09:50Z","sources":{"footballdata":"2026-07-04T09:50Z"}}</script>
+<script id="wc-data" type="application/json"></script>
 
 <script>
 "use strict";
@@ -555,11 +555,17 @@ function qatarFull(iso){const ms=parseUTC(iso);if(ms==null)return null;const d=s
 function qatarShort(iso){const ms=parseUTC(iso);if(ms==null)return null;const d=shift(ms,QOFF);return pad(d.getUTCHours())+":"+pad(d.getUTCMinutes());}
 function venueLocal(iso,off){const ms=parseUTC(iso);if(ms==null)return null;const d=shift(ms,off);return pad(d.getUTCHours())+":"+pad(d.getUTCMinutes())+" local";}
 function niceDate(dstr){const p=/(\d{4})-(\d{2})-(\d{2})/.exec(dstr);if(!p)return dstr;const d=new Date(Date.UTC(+p[1],+p[2]-1,+p[3]));return DAYS[d.getUTCDay()]+", "+d.getUTCDate()+" "+MON[d.getUTCMonth()]+" "+d.getUTCFullYear();}
+/* format a UTC ISO stamp (e.g. 2026-07-04T09:00Z) as Qatar local time */
+function qatarStamp(iso){var ms=parseUTC(iso);if(ms==null)return iso;var d=new Date(ms+QOFF*3600*1000);return d.getUTCDate()+" "+MON[d.getUTCMonth()].slice(0,3)+" "+d.getUTCFullYear()+", "+pad(d.getUTCHours())+":"+pad(d.getUTCMinutes())+" Qatar time";}
 function relTime(iso){const ms=parseUTC(iso);if(ms==null)return "";const diff=ms-Date.now();const h=Math.round(diff/3600000);
   if(Math.abs(h)<1){const mn=Math.round(diff/60000);return mn>=0?("in "+mn+" min"):(Math.abs(mn)+" min ago");}
   if(h>0&&h<48)return "in "+h+"h";const dd=Math.round(h/24);return dd>0?("in "+dd+"d"):(Math.abs(dd)+"d ago");}
 function qatarTodayStr(){var d=new Date(Date.now()+QOFF*3600*1000);return d.getUTCFullYear()+"-"+pad(d.getUTCMonth()+1)+"-"+pad(d.getUTCDate());}
-function isToday(m){return m.date===qatarTodayStr();}
+/* A match's day is its Qatar-time kick-off date (koUTC→+03:00), NOT the raw US
+   date field — a 21:00 UTC kick-off is 00:00 the NEXT day in Qatar. */
+function qatarDateOf(m){ if(m.koUTC){ var ms=parseUTC(m.koUTC); if(ms!=null){ var d=new Date(ms+QOFF*3600*1000);
+  return d.getUTCFullYear()+"-"+pad(d.getUTCMonth()+1)+"-"+pad(d.getUTCDate()); } } return m.date; }
+function isToday(m){return qatarDateOf(m)===qatarTodayStr();}
 
 /* ============================================================================
    MODEL — transparent 5-factor estimate (labelled, never official)
@@ -584,6 +590,10 @@ function statusMeta(code){const r=T[code]?T[code].r:"";
     OUT2:["Runners-up","tag-r16","Runners-up"],GROUP:["Eliminated — group stage","tag-group","Out group"]}[r])||["In the tournament","tag-group","—"];}
 function currentStageLabel(code){return ({TODAY:"Round of 32 (today)",R16:"Round of 16",QF:"Quarter-final",SF:"Semi-final",FINAL:"Final",WIN:"Champion"}[T[code]?T[code].r:""])||"In tournament";}
 function nextRoundProb(row){const ks=["r16","qf","sf","f","w"];for(let i=0;i<ks.length;i++){if(row[ks[i]]<0.999)return row[ks[i]];}return row.w;}
+/* the earliest knockout round that still has unplayed matches */
+function currentStage(){const order=["R32","R16","QF","SF","FINAL"];for(let i=0;i<order.length;i++){const ms=M.filter(m=>m.st===order[i]);if(ms.length&&ms.some(m=>m.status!=="FT"))return STAGE_LABEL[order[i]];}return "Final";}
+/* how many of the 16 Round-of-16 slots are filled */
+function r16Filled(){let n=0;M.filter(m=>m.st==="R16").forEach(m=>{if(m.a)n++;if(m.b)n++;});return n;}
 function momentum(code){const ko=koResultsFor(code);if(!ko.length)return 0;const last=ko[ko.length-1];
   if(last.win&&last.gd>=2)return 12;if(last.win&&last.pens)return 2;if(last.win)return 7;return -8;}
 function formScore(code){return clamp(0.55*wcScore(code)+0.35*(TIER[code]||55)+momentum(code),5,100);}
@@ -734,11 +744,12 @@ function renderHome(){
   h+=kpi("Next match", nextVal, next?(qatarFull(next.koUTC||"")||niceDate(next.date))+" · "+relTime(next.koUTC||next.date+"T00:00Z"):"", "hot","⏱️");
   h+=kpi("Matches today", String(todays.length), niceDate(qatarTodayStr())+" · Qatar time", "tealg","📅");
   h+=kpi("Live now", String(live.length), live.length?"streaming":"No match live right now", "redg","🔴");
-  h+=kpi("Tournament stage", "Round of 32 → 16", "Knockout phase", "blueg","🧭");
+  h+=kpi("Tournament stage", currentStage(), "Knockout phase", "blueg","🧭");
   h+=kpi("Golden Boot leader", '<span class="playerrow" style="margin-top:2px">'+avatar("Lionel Messi","ARG",44)+'<span>Lionel Messi</span></span>', "Leads adidas Golden Boot race (FIFA) · confidence: High", "goldg");
   const upVal=ups?('<span class="kpi-teams">'+flagChip(ups.w,24,16)+esc(teamName(ups.w))+' <span style="opacity:.8">⇗</span> '+flagChip(ups.l,24,16)+esc(teamName(ups.l))+'</span>'):"—";
   h+=kpi("Biggest upset", upVal, ups?("R32 · model-assessed shock (Δ"+Math.round(ups.gap)+") · confidence: Medium"):"", "champg","💥");
-  h+=kpi("Confirmed in Round of 16", "13 / 16", "3 places decided today", "tealg","✅");
+  var _r16=r16Filled();
+  h+=kpi("Confirmed in Round of 16", _r16+" / 16", _r16>=16?"All 16 places confirmed":(16-_r16)+" still to be decided", "tealg","✅");
   h+='</div>';
 
   h+=filterBar();
@@ -816,7 +827,7 @@ function renderMatches(){
     list.forEach(m=>{let pred="—";if(m.a&&m.b){const e=estimate(m.a,m.b,m.st!=="GROUP");pred=Math.round(e.a*100)+"% / "+Math.round(e.b*100)+"%";}
       h+='<tr data-mid="'+m.id+'" style="cursor:pointer"><td>'+STAGE_LABEL[m.st]+(m.num?" #"+m.num:"")+'</td>'
         +'<td><span class="tbadge">'+flagChip(m.a||"",18,12)+' '+esc(feederLabel(m,"a"))+' <span class="muted">v</span> '+flagChip(m.b||"",18,12)+' '+esc(feederLabel(m,"b"))+'</span></td>'
-        +'<td>'+(m.koUTC?qatarShort(m.koUTC)+" · "+niceDate(m.date):niceDate(m.date)+" · TBC")+'</td>'
+        +'<td>'+(m.koUTC?qatarShort(m.koUTC)+" · "+niceDate(qatarDateOf(m)):niceDate(m.date)+" · TBC")+'</td>'
         +'<td>'+(m.ven?esc(VEN[m.ven].fifa+" · "+VEN[m.ven].city):"TBC")+'</td>'
         +'<td>'+(m.status==="FT"?"Full-time":m.status==="TODAY"?"Today":"Scheduled")+'</td>'
         +'<td class="num">'+(m.sc?m.sc[0]+"–"+m.sc[1]+(m.pens?" ("+m.pens[0]+"–"+m.pens[1]+"p)":""):"–")+'</td>'
@@ -979,7 +990,7 @@ function renderPredictions(){
       +'<td><span class="conf-m">Med</span></td>'
       +'<td class="'+tr.cls+'">'+tr.t+'</td><td class="small muted">'+esc(championReason(row.c))+'</td></tr>';});
   h+='</tbody></table></div>';
-  h+='<div class="disclaimer">Columns show P(reach next round) · P(reach semi-final) · P(reach final) · P(win) — from the Monte-Carlo bracket simulation. Last updated '+esc(SNAPSHOT_AT)+'. Sources: FIFA (teams, results), ESPN (bracket), planner model (probabilities). Estimates only — not official FIFA predictions.</div>';
+  h+='<div class="disclaimer">Columns show P(reach next round) · P(reach semi-final) · P(reach final) · P(win) — from the Monte-Carlo bracket simulation. Last updated '+esc(qatarStamp(SNAPSHOT_AT))+'. Sources: FIFA (teams, results), ESPN (bracket), planner model (probabilities). Estimates only — not official FIFA predictions.</div>';
 
   // per-match odds
   h+='<div class="section-h"><h2><span class="ic">⚔️</span>Upcoming ties — match odds</h2></div><div class="grid cards-2">';
@@ -1078,12 +1089,12 @@ async function doShare(){
   window.open("https://wa.me/?text="+encodeURIComponent(text),"_blank","noopener");
 }
 function renderFooter(){const srcs=Object.keys(SRC).map(k=>srcChip(k)).join(" ");
-  $("#footer").innerHTML='<div class="autobadge"><span class="lb"></span>🔄 Auto-updates via GitHub Actions + football-data.org<span class="ts">· last refreshed '+esc(SNAPSHOT_AT)+' (UTC)</span></div>'
+  $("#footer").innerHTML='<div class="autobadge"><span class="lb"></span>🔄 Auto-updates via GitHub Actions + football-data.org<span class="ts">· last refreshed '+esc(qatarStamp(SNAPSHOT_AT))+'</span></div>'
     +'<div class="section-h"><h2 style="font-size:14px"><span class="ic">🔒</span>Data sources &amp; integrity</h2></div><div class="chip-row">'+srcs+'</div>'
     +'<p style="margin-top:12px;max-width:860px">This planner shows a <b>verified snapshot</b> from official FIFA and reputable coverage (ESPN), 3 July 2026 — every fixture, result, venue and team status cited above with a timestamp. '
     +'Win &amp; champion probabilities are computed by a transparent 5-factor model and clearly labelled <b>model estimates</b>, not official FIFA predictions. Live match data (line-ups, xG, possession, cards, subs, VAR, per-player stats) and exact goal tallies show <b>“not available yet / live feed unavailable”</b> until a licensed provider is connected. '
     +'A provider abstraction layer supports Sportradar, Opta / Stats Perform, API-Football and Sportmonks — no site is scraped against its terms. Country locators use real geographic coordinates.</p>'
-    +'<p class="faint small" style="margin-top:8px">All times in Qatar time (Asia/Qatar, UTC+03:00). Snapshot compiled '+esc(SNAPSHOT_AT)+'.</p>';}
+    +'<p class="faint small" style="margin-top:8px">All times in Qatar time (Asia/Qatar, UTC+03:00). Snapshot compiled '+esc(qatarStamp(SNAPSHOT_AT))+'.</p>';}
 
 /* ============================================================================
    EVENTS + BOOT
