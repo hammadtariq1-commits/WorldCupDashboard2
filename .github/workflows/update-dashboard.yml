@@ -45,7 +45,7 @@ jobs:
             git commit -m "chore: refresh World Cup results ($(date -u '+%Y-%m-%d %H:%M UTC'))"
             git pull --rebase origin main
             git push origin main
-            `
+            
             echo "Pushed an update - Netlify will redeploy."
           else
             echo "No change since last run."
