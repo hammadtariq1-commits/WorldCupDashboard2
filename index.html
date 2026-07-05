@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="color-scheme" content="light">
+<meta name="color-scheme" content="dark">
 <title>FIFA World Cup 2026</title>
 <meta name="description" content="FIFA World Cup 2026 — live matches, knockout bracket, predictions and Golden Boot, all in Qatar time.">
 <meta name="theme-color" content="#00e0a8">
@@ -15,8 +15,8 @@
 <meta property="og:type" content="website">
 <style>
 :root{
-  --bg:#eef3fb; --bg2:#e4ebf6; --panel:#ffffff; --panel2:#f5f8fd; --line:#dde5f1; --line2:#c9d5e8;
-  --ink:#0b1426; --muted:#4a5a76; --faint:#8494b0;
+  --bg:#070b14; --bg2:#0c1220; --panel:#111a2e; --panel2:#16213a; --line:#26324e; --line2:#33436a;
+  --ink:#f0f5ff; --muted:#9aabca; --faint:#6b7c9c;
   --pink:#ff2d78; --purple:#8b5cf6; --teal:#00e0a8; --blue:#3b82f6; --gold:#ffc23c; --orange:#ff8a3d;
   --green:#22e07a; --red:#ff5a6a; --grey:#5b6b88;
   --grad:linear-gradient(120deg,#00e0a8 0%,#3b82f6 100%);
@@ -25,13 +25,13 @@
   --grad-champ:linear-gradient(120deg,#8b5cf6 0%,#ec4899 100%);
   --grad-red:linear-gradient(120deg,#ff5a6a 0%,#ff8a3d 100%);
   --grad-blue:linear-gradient(120deg,#3b82f6 0%,#8b5cf6 100%);
-  --shadow:0 12px 32px rgba(24,48,96,.12);
-  --glow-teal:0 0 0 1px rgba(0,224,168,.45),0 10px 30px rgba(0,224,168,.18);
+  --shadow:0 14px 40px rgba(0,0,0,.45);
+  --glow-teal:0 0 0 1px rgba(0,224,168,.4),0 8px 30px rgba(0,224,168,.15);
   --radius:18px; --radius-s:12px; --maxw:1300px;
 }
-/* Light is the standard theme for everyone. Keep a dark media query so OS-dark viewers keep the light chrome. */
-@media (prefers-color-scheme: dark){
-  :root{ color-scheme:light; }
+/* Dark is the standard theme for everyone, regardless of the viewer's OS setting. */
+@media (prefers-color-scheme: light){
+  :root{ color-scheme:dark; }
 }
 *{box-sizing:border-box}
 html,body{margin:0;padding:0}
@@ -61,7 +61,7 @@ button{font-family:inherit; cursor:pointer}
 
 /* ---------- Top bar ---------- */
 .topbar{position:sticky; top:0; z-index:50; backdrop-filter:blur(14px);
-  background:linear-gradient(180deg,rgba(255,255,255,.96),rgba(255,255,255,.80)); border-bottom:1px solid var(--line)}
+  background:linear-gradient(180deg,rgba(7,11,20,.92),rgba(7,11,20,.72)); border-bottom:1px solid var(--line)}
 .topbar .row{display:flex; align-items:center; gap:14px; padding:11px 18px; max-width:var(--maxw); margin:0 auto; flex-wrap:wrap}
 .brand{display:flex; align-items:center; gap:13px; min-width:0}
 .badge-cup{width:46px;height:46px;border-radius:14px;background:var(--grad-hot);display:grid;place-items:center;
@@ -93,13 +93,13 @@ button{font-family:inherit; cursor:pointer}
   box-shadow:var(--shadow); position:relative}
 .hero .inner{padding:30px 26px; display:flex; align-items:center; gap:26px; flex-wrap:wrap}
 .hero h2{margin:0; font-size:34px; font-weight:900; letter-spacing:.3px; line-height:1.02;
-  background:linear-gradient(120deg,#0b1426,#3b82f6);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+  background:linear-gradient(120deg,#fff,#bfe9ff);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
 .hero p{margin:8px 0 0; color:var(--muted); font-size:14.5px}
 .hero .tro{font-size:96px; line-height:1; filter:drop-shadow(0 10px 22px rgba(255,194,60,.5)); animation:floaty 5s ease-in-out infinite}
 .hero-flags{display:inline-flex;align-items:center;gap:6px;margin-inline-start:6px}
 @media(max-width:560px){ .hero .tro{font-size:64px} .hero h2{font-size:25px} }
 .hero-tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
-.htag{font-size:11px;font-weight:800;letter-spacing:.4px;padding:5px 11px;border-radius:999px;border:1px solid var(--line2);background:rgba(11,20,38,.04)}
+.htag{font-size:11px;font-weight:800;letter-spacing:.4px;padding:5px 11px;border-radius:999px;border:1px solid var(--line2);background:rgba(255,255,255,.05)}
 
 /* ---------- Filters ---------- */
 .filters{display:flex; gap:8px; flex-wrap:wrap; align-items:center; padding:14px 0}
@@ -150,6 +150,9 @@ main{padding:6px 0 60px}
 .kpi.redg .lab,.kpi.redg .sub{color:rgba(255,255,255,.9)}
 .kpi.blueg{background:var(--grad-blue); border:none; color:#fff}
 .kpi.blueg .lab,.kpi.blueg .sub{color:rgba(255,255,255,.88)}
+.kpi.cdg{background:linear-gradient(135deg,#0e1a34,#1c2c52); border:1px solid rgba(0,224,168,.4)}
+.kpi.cdg .lab{color:var(--teal)}
+.countdown{font-variant-numeric:tabular-nums; letter-spacing:1.5px; color:var(--teal); text-shadow:0 0 20px rgba(0,224,168,.5); white-space:nowrap}
 .kpi .big-emoji{position:absolute; right:10px; bottom:2px; font-size:56px; opacity:.18}
 /* player avatar placeholder */
 .avatar{display:inline-grid; place-items:center; border-radius:50%; color:#fff; font-weight:900;
@@ -214,7 +217,7 @@ table{width:100%; border-collapse:collapse; font-size:13px}
 th,td{padding:11px 11px; text-align:left; border-bottom:1px solid var(--line); white-space:nowrap}
 th{font-size:10.5px; text-transform:uppercase; letter-spacing:.6px; color:var(--muted); font-weight:800; background:var(--panel2); position:sticky; top:0}
 td.num,th.num{text-align:right; font-variant-numeric:tabular-nums}
-tbody tr:hover td{background:rgba(11,20,38,.04)}
+tbody tr:hover td{background:rgba(255,255,255,.03)}
 .rankcell{font-weight:900;font-size:15px;color:var(--gold)}
 
 /* ---------- Awaiting ---------- */
@@ -350,7 +353,7 @@ footer{border-top:1px solid var(--line);margin-top:34px;padding:22px 0 44px;colo
 
 <!-- AUTOMATION HOOK: the GitHub Actions build writes the latest results here.
      Leave the tag in place. Empty = the dashboard uses its built-in snapshot. -->
-<script id="wc-data" type="application/json">{"results":[{"id":"r32a","a":"CAN","b":"RSA","status":"FT","sc":[1,0],"koUTC":"2026-06-28T19:00Z","src":["footballdata"]},{"id":"r32b","a":"BRA","b":"JPN","status":"FT","sc":[2,1],"koUTC":"2026-06-29T17:00Z","src":["footballdata"]},{"id":"r32c","a":"GER","b":"PAR","status":"FT","sc":[4,5],"pens":[3,4],"koUTC":"2026-06-29T20:30Z","src":["footballdata"]},{"id":"r32d","a":"NED","b":"MAR","status":"FT","sc":[3,4],"pens":[2,3],"koUTC":"2026-06-30T01:00Z","src":["footballdata"]},{"id":"r32e","a":"CIV","b":"NOR","status":"FT","sc":[1,2],"koUTC":"2026-06-30T17:00Z","src":["footballdata"]},{"id":"r32f","a":"FRA","b":"SWE","status":"FT","sc":[3,0],"koUTC":"2026-06-30T21:00Z","src":["footballdata"]},{"id":"r32g","a":"MEX","b":"ECU","status":"FT","sc":[2,0],"koUTC":"2026-07-01T02:00Z","src":["footballdata"]},{"id":"r32h","a":"ENG","b":"COD","status":"FT","sc":[2,1],"koUTC":"2026-07-01T16:00Z","src":["footballdata"]},{"id":"r32i","a":"BEL","b":"SEN","status":"FT","sc":[3,2],"koUTC":"2026-07-01T20:00Z","src":["footballdata"]},{"id":"r32j","a":"USA","b":"BIH","status":"FT","sc":[2,0],"koUTC":"2026-07-02T00:00Z","src":["footballdata"]},{"id":"r32k","a":"ESP","b":"AUT","status":"FT","sc":[3,0],"koUTC":"2026-07-02T19:00Z","src":["footballdata"]},{"id":"r32l","a":"POR","b":"CRO","status":"FT","sc":[2,1],"koUTC":"2026-07-02T23:00Z","src":["footballdata"]},{"id":"r32m","a":"SUI","b":"ALG","status":"FT","sc":[2,0],"koUTC":"2026-07-03T03:00Z","src":["footballdata"]},{"id":"r32n","a":"AUS","b":"EGY","status":"FT","sc":[3,5],"pens":[2,4],"koUTC":"2026-07-03T18:00Z","src":["footballdata"]},{"id":"r32o","a":"ARG","b":"CPV","status":"FT","sc":[3,2],"koUTC":"2026-07-03T22:00Z","src":["footballdata"]},{"id":"r32p","a":"COL","b":"GHA","status":"FT","sc":[1,0],"koUTC":"2026-07-04T01:30Z","src":["footballdata"]},{"id":"r16_89","a":"PAR","b":"FRA","status":"FT","sc":[0,1],"koUTC":"2026-07-04T21:00Z","src":["footballdata"]},{"id":"r16_90","a":"CAN","b":"MAR","status":"FT","sc":[0,3],"koUTC":"2026-07-04T17:00Z","src":["footballdata"]},{"id":"r16_91","a":"BRA","b":"NOR","koUTC":"2026-07-05T20:00Z"},{"id":"r16_92","a":"MEX","b":"ENG","koUTC":"2026-07-06T00:00Z"},{"id":"r16_93","a":"POR","b":"ESP","koUTC":"2026-07-06T19:00Z"},{"id":"r16_94","a":"USA","b":"BEL","koUTC":"2026-07-07T00:00Z"},{"id":"r16_95","a":"ARG","b":"EGY","koUTC":"2026-07-07T16:00Z"},{"id":"r16_96","a":"SUI","b":"COL","koUTC":"2026-07-07T20:00Z"},{"id":"qf1","a":"FRA","b":"MAR","koUTC":"2026-07-09T20:00Z"}],"updatedAt":"2026-07-05T19:17Z","sources":{"footballdata":"2026-07-05T19:17Z"}}</script>
+<script id="wc-data" type="application/json"></script>
 
 <script>
 "use strict";
@@ -571,6 +574,16 @@ function qatarTodayStr(){var d=new Date(Date.now()+QOFF*3600*1000);return d.getU
 function qatarDateOf(m){ if(m.koUTC){ var ms=parseUTC(m.koUTC); if(ms!=null){ var d=new Date(ms+QOFF*3600*1000);
   return d.getUTCFullYear()+"-"+pad(d.getUTCMonth()+1)+"-"+pad(d.getUTCDate()); } } return m.date; }
 function isToday(m){return qatarDateOf(m)===qatarTodayStr();}
+/* next match that hasn't kicked off yet (earliest future kick-off) */
+function nextCountdownMatch(){var best=null,bestT=Infinity,now=Date.now();
+  M.forEach(function(m){if(!m.koUTC||m.status==="FT")return;var t=parseUTC(m.koUTC);if(t==null)return;if(t>now&&t<bestT){bestT=t;best=m;}});
+  return best;}
+function fmtCountdown(ms){if(ms<=0)return "Kicking off!";var s=Math.floor(ms/1000),d=Math.floor(s/86400);s-=d*86400;
+  var h=Math.floor(s/3600);s-=h*3600;var mn=Math.floor(s/60);s-=mn*60;return (d>0?d+"d ":"")+pad(h)+":"+pad(mn)+":"+pad(s);}
+function tickCountdown(){var el=document.getElementById("cdVal");if(!el)return;var m=nextCountdownMatch();
+  if(!m){el.textContent="—";var s0=document.getElementById("cdSub");if(s0)s0.textContent="No upcoming match";return;}
+  el.textContent=fmtCountdown(parseUTC(m.koUTC)-Date.now());
+  var s=document.getElementById("cdSub");if(s)s.textContent=feederLabel(m,"a")+" v "+feederLabel(m,"b")+" · "+qatarShort(m.koUTC)+" QT";}
 
 /* ============================================================================
    MODEL — transparent 5-factor estimate (labelled, never official)
@@ -747,6 +760,10 @@ function renderHome(){
   h+='<div class="grid cards-kpi">';
   const nextVal=next?('<span class="kpi-teams">'+(next.a?flagChip(next.a,26,17):"")+esc(feederLabel(next,"a"))+' <span style="opacity:.7">v</span> '+(next.b?flagChip(next.b,26,17):"")+esc(feederLabel(next,"b"))+'</span>'):"—";
   h+=kpi("Next match", nextVal, next?(qatarFull(next.koUTC||"")||niceDate(next.date))+" · "+relTime(next.koUTC||next.date+"T00:00Z"):"", "hot","⏱️");
+  var _cd=nextCountdownMatch();
+  var _cdInit=_cd?fmtCountdown(parseUTC(_cd.koUTC)-Date.now()):"—";
+  var _cdSub=_cd?(feederLabel(_cd,"a")+" v "+feederLabel(_cd,"b")+" · "+qatarShort(_cd.koUTC)+" QT"):"No upcoming match";
+  h+=kpi("Next Match Starts In", '<span id="cdVal" class="countdown">'+esc(_cdInit)+'</span>', '<span id="cdSub">'+esc(_cdSub)+'</span>', "cdg","⏳");
   var _doneToday=todays.filter(m=>m.status==="FT").length;
   var _todaySub = todays.length===0 ? "No matches today" : (_doneToday+" completed · "+(todays.length-_doneToday)+" to play");
   h+=kpi("Matches today", todays.length+" match"+(todays.length===1?"":"es"), _todaySub, "tealg","📅");
@@ -1120,6 +1137,7 @@ $("#shareBtn").addEventListener("click",doShare);
 var _fab=$("#fabShare");if(_fab)_fab.addEventListener("click",doShare);
 window.addEventListener("hashchange",()=>{render();window.scrollTo(0,0);});
 championSim();updateFeedUI();doRefresh();renderFooter();render();
+setInterval(tickCountdown,1000);
 </script>
 </body>
 </html>
